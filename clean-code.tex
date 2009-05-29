@@ -1,0 +1,640 @@
+\newpage
+\section{Coding clean}
+
+There is a plethora of reasons why code that \emph{just works\texttrademark} is not good enough. Take a peek at listing \ref{listing:prime1} and admit:
+
+\begin{itemize}
+% maintainability:
+\item Fixing bugs, adding features, and working with the code in all other aspects get a lot easier when the code isn't messy.
+% readability:
+\item Imagine someone else looking at your code, and trying to figure out what it does. In case you have you didn't keep it clean, that will certainly be a huge waste of time.
+\item You might be planning to code for a particular purpose now, not planning on ever using it again, but experience tells that there is virtually no computational task that you come across only once in your programming life. Imagine yourself looking at your own code, a week, a month, or a year from now: Would you still be able to understand why the code works as it does? Clean code will make sure you do.
+\end{itemize}
+
+Examples of messy, unstructured, and generally ugly programs are plenty, but there are also places where you are almost guaranteed to find well-structured code. Take, for example the \matlab{} internals: Many of the functions that you might make use of when programming \matlab{} are implemented in \matlab{} syntax themselves -- by professional MathWorks programmers. To look at such the contents of the \lstinline!mean()! function (which calculates the average mean value of an array), type \lstinline!edit mean! on the \matlab{} command line. You might not be able to understand what's going on, but the way the file looks like may give you hints on how to write clean code.
+
+
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred},float=b,label={listing:prime1},caption={Perfectly legal \matlab{} code, with all rules of style ignored. Can you guess what this function does?}]
+function lll(ll1,l11,l1l);if floor(l11/ll1)<=1;...
+lll(ll1,l11+1,l1l );elseif mod(l11,ll1)==0;lll(...
+ll1,l11+1,0);elseif mod(l11,ll1)==floor(l11/...
+ll1)&&~l1l;floor(l11/ll1),lll(ll1,l11+1,0);elseif...
+mod(l11,ll1)>1&&mod(l11,ll1)<floor(l11/ll1),...
+lll(ll1,l11+1,l1l+~mod(floor(l11/ll1),mod(l11,ll1)) );
+elseif l11<ll1*ll1;lll(ll1,l11+1,l1l);end;end
+\end{lstlisting}
+
+\subsection{Multiple functions per file  -- \cleansymbol\cleansymbol\cleansymbol}
+It is a common and false prejudice that \matlab{} cannot cope with several functions per file. The truth is: There \emph{may} be more than one function in a file, but just the first one in the file will be \emph{visible} to functions in other files or to the command line. In that sense, those functions in a file which do not take the first position can (only) act as a helper for the function on top (see listing \ref{listing:multiple-functions}).
+
+When writing code, think about whether or not a particular function is really just a helper, or if needs to be allowed to be called from somewhere else. Doing so, you can avoid a cluttered mess of dozens of M-files in your program folder.
+
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen},float,label={listing:multiple-functions},caption={One source containing three functions: Useful when \lstinline!helperFun1! and \lstinline!helperFun2! are only needed by \lstinline!topFun!.}]
+% ===========================================================
+% callable from outside:
+function topFun
+  % [...]
+  % calls helperFun1 and helperFun2
+  % [...]
+end
+% ===========================================================
+
+
+% ===========================================================
+% only visible to all functions in this file:
+function helperFun1
+  % [...]
+end
+% ===========================================================
+
+
+% ===========================================================
+% only visible to all functions in this file:
+function helperFun2
+  % [...]
+end
+% ===========================================================
+\end{lstlisting}
+
+
+\paragraph{Subfunctions -- \cleansymbol\cleansymbol}
+An issue that may come up if you have quite a lot of functions per file might be that you lose sight of which function actually requires which other function.
+
+In case one of the functions is a helper function for not more than one other function, a clean place to put it would be \emph{inside} the other function. This way, it will only be visible to the surrounding function and its name will not interfere with the name of any other subfunction. The biggest advantage, however, is certainly that the subfunction is then syntactically \emph{clearly associated} with its parent function. When 
+looking at the code for the first time, the relations between the functions are immediately visible.
+
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+% [...]
+
+% =========================
+function fun1
+  % call helpFun1 here
+end
+% =========================
+
+% =========================
+function fun2
+  % call helpFun2 here
+end
+% =========================
+
+% =========================
+function helpFun1
+   % [...]
+end
+% =========================
+
+% =========================
+function helpFun2
+   % [...]
+end
+% =========================
+
+% [...]
+\end{lstlisting}
+The routines \lstinline!fun1!, \lstinline!fun2!, \lstinline!helpFun1!, and \lstinline!helpFun2! are sitting next to each other and no hierarchy is visible.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+% [...]
+
+% =========================
+function fun1
+  % call helpFun here
+
+  % -----------------------
+  function helpFun
+     % [...]
+  end
+  % -----------------------
+end
+% =========================
+
+% =========================
+function fun2
+  % call helpFun here
+
+  % -----------------------
+  function helpFun
+     % [...]
+  end
+  % -----------------------
+end
+% =========================
+
+% [...]
+\end{lstlisting}
+Immediately obvious: The first \lstinline!helpFun! helps \lstinline!fun1!, the second \lstinline!fun2! -- and does nothing else.
+\end{minipage}
+\hfill
+
+% \begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen},float,label={listing:multiple-functions},caption={Two function having subfunction with the same name.}]
+% 
+% \end{lstlisting}
+
+
+
+
+\subsection{Variable and function names -- \cleansymbol\cleansymbol\cleansymbol}
+
+One key ingredient for a consistent source code is a consistent naming scheme for the variables in use. From the dawn of programming languages in the 1950's, schemes have developed and decayed and are generally subject to evolution. There are, however, some general rules which have proven useful over the years in all kinds of various contexts. In \cite{Johnson:2002:MPS}, a crisp and yet comprehensive overview on many aspects of variable naming is given; a few of the most useful ones are stated here.
+
+\paragraph{Variable names tell what the variable does.} Undoubtedly, this is the first and foremost rule in variable naming, and it implies several things.
+
+\begin{itemize}
+\item Of course, you wouldn't name a variable \lstinline!pi! when it really holds the value \lstinline!2.718128!, right?
+\item In mathematics and computer science, some names are connected to certain meanings. Table \ref{table:typical-variable-usage} lists a number of widely used conventions.
+
+\begin{table}
+\centering
+\begin{tabular}{ll}
+\toprule
+Variable name                                                 & Usual purpose\\\midrule
+\lstinline!m!, \lstinline!n!                                  & integer sizes (,e.g., the dimension of a matrix)\\
+\lstinline!i!, \lstinline!j!, \lstinline!k! (, \lstinline!l!) & integer numbers (mostly loop indices)\\
+\lstinline!x!, \lstinline!y!                                  & real values ($x$-, $y$-axis)\\
+\lstinline!z!                                                 & complex value or $z$-axis\\
+\lstinline!c!                                                 & complex value or constant (or both)\\
+\lstinline!t!                                                 & time value\\
+\lstinline!e!                                                 & the Eulerian number or `unit' entities\\
+\lstinline!f!, \lstinline!g! (, \lstinline!h!)                & generic function names\\
+\lstinline!h!                                                 & spatial discretization parameter (in numerical analysis)\\
+\lstinline!epsilon!, \lstinline!delta!                        & small real entities\\
+\lstinline!alpha!, \lstinline!beta!                           & angles or parameters\\
+\lstinline!theta!, \lstinline!tau!                            & parameters, time discretization parameter (in n.a.)\\
+\lstinline!kappa!, \lstinline!sigma!, \lstinline!omega!       & parameters\\
+\lstinline!u!, \lstinline!v!, \lstinline!w!                   & vectors\\
+\lstinline!A!. \lstinline!M!                                  & matrices\\
+\lstinline!b!                                                 & right-hand side of an equation system\\\bottomrule
+\end{tabular}
+\caption{Variable names and their usual purposes in source codes. These guidelines aren't particularly strict, but for example one would never use \lstinline!i! to hold a float number, nor \lstinline!x! for an integer.}
+\label{table:typical-variable-usage}
+\end{table}
+\end{itemize}
+
+\paragraph{Short variable names.}
+Short, non-descriptive variable names are quite common in mathematical computing as the variable names in the corresponding (pen and paper) calculations are hardly ever longer then one character either (see table \ref{table:typical-variable-usage}). To be able to distinguish between vector and matrix entities, it is common practice in programming as well as mathematics to denote matrices by upper-case, vectors and scalars by lower-case characters.
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+K = 20;
+a = zeros(K,K);
+B = ones(K,1);
+
+U = a*B;
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+k = 20;
+A = zeros(k,k);
+b = ones(k,1);
+
+u = A*b;
+\end{lstlisting}
+\end{minipage}
+\hfill
+
+
+\paragraph{Long variable names.}
+A widely used convention mostly in the C++ development community to write long, descriptive variables in mixed case starting with lower case, such as
+\begin{lstlisting}
+linearity, distanceToCircle, figureLabel.
+\end{lstlisting}
+Alternatively, one could use the underscore to separate parts of a compound variable name:
+\begin{lstlisting}
+linearity, distance_to_circle, figure_label.
+\end{lstlisting}
+This technique, although readable, is not commonly used for variable names in other languages. Also, some feel the underscore character is not quite easily typable on the keyboard.
+
+When still using the underscore notation, watch out for variable names in \matlab{}'s plots: its \TeX-interpreter will treat the underscore a switch to subscript and \lstinline!distance_to_circle! will read \lstinline!distance!$_{\text{\lstinline!t!}}$\lstinline!o!$_{\text{\lstinline!c!}}$\lstinline!ircle! in the plot.
+
+\begin{remark}
+Using the hyphen `\lstinline!-!' as a separator cannot be considered: \matlab{} will immediately interpret `\lstinline!-!' as the minus sign, \lstinline!distance-to-circle! is ``\lstinline!distance! minus \lstinline!to! minus \lstinline!circle!''. The same holds for function names.
+\end{remark}
+
+% \paragraph{Variables with a large scope should have meaningful names. Variables with a small
+% scope can have short names.}
+% In practice most variables should have meaningful names. The use of short names should be
+% reserved for conditions where they clarify the structure of the statements. Scratch variables used
+% for temporary storage or indices can be kept short. A programmer reading such variables should
+% be able to assume that its value is not used outside a few lines of code. Common scratch variables
+% for integers are i, j, k, m, n and for doubles x, y and z.
+
+\paragraph{Logical variable names.} If a variable is supposed to only hold the values \lstinline!0! or \lstinline!1! to represent \lstinline!true! or \lstinline!false!, then the variable name should express that. A common technique is to prepend the variable name by \lstinline!is! and, less common, by \lstinline!flag!.
+\begin{lstlisting}
+isPrime, isInside, flagCircle
+\end{lstlisting}
+
+
+\subsection{Indentation -- \cleansymbol\cleansymbol\cleansymbol\cleansymbol}
+
+If you ever dealt with nested \lstinline!for!- and \lstinline!if! constructs, then you probably noticed that it may sometimes be hard to distinguish those nested constructions from other code at first sight. Also, if the contents of a loop extend over more than just a few lines, a visual aid may be helpful for indicating what is inside and what is outside the loop -- and this is where indentation comes into play.
+
+Usually, one would indent everything within a loop, a function, a conditional, a \lstinline!switch! statement and so on. Depending on who you ask, you'll be told to indent by two, three, or four spaces, or one tab. As a general rule, the indentation should yield a clear visual distinction while not using up all your space on the line (see next paragraph).
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+for i=1:n
+for j=1:n
+if A(i,j)<0
+A(i,j) = 0;
+end
+end
+end
+\end{lstlisting}
+No visual distinction between the loop levels makes it hard to recognize where the first loop ends.\footnotemark
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+for i=1:n
+    for j=1:n
+        if A(i,j)<0
+            A(i,j) = 0;
+        end
+    end
+end
+\end{lstlisting}
+With indentation, the code looks a lot clearer.\footnotemark[\value{footnote}]
+\end{minipage}
+\hfill
+
+\footnotetext{What the code does is replacing all negative entries of an \lstinline!n!$\times$\lstinline!n!-matrix by \lstinline!0!. There is, however, a much better (shorter, faster) way to achieve this: \lstinline!A( A<0 ) = 0;!.}
+
+
+
+
+
+\subsection{Line length -- \cleansymbol}
+There is de facto no limit on how much you can write on a single line of \matlab{} code. In fact, you could condense every \matlab{} code to a ``one-liner'' by separating two commands by a `\lstinline!;!' or a `\lstinline!,!', and suppress the newline character between them. However, a single line with one million characters will potentially not be very readable.
+
+But, how many characters can you fit onto a single line without obscuring its content? This is certainly debatable, but commonly this value sits somewhere between 70 and 80; \matlab{}'s own text editor suggests 75 characters per line. This way, one makes also sure that it is not necessary to have a 22" widescreen monitor to be able to display the code without artificial line breaks or horizontal scrolling in the editor.
+
+Sometimes of course your lines need to stretch longer than this, but that's why \matlab{} contains the ellipses `\lstinline!...!' which makes sure the line following the line with the ellipsis is read as if there was no line break at all.
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+a = sin( exp(x) ) ...
+  - alpha* 4^6    ...
+  + u'*v;
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+a = sin( exp(x) ) - alpha* 4^6 + u'*v;
+
+
+\end{lstlisting}
+\end{minipage}
+\hfill
+
+
+\subsection{Spaces and alignment -- \cleansymbol\cleansymbol\cleansymbol}\label{paragraph:alignment}
+In some situations, it makes sense to break a line although it hasn't up to the limit, yet. This may be the case when you are dealing with an expression that -- because of its length -- has to break anyway further to the right; then, one would like to choose the line break point such that it coincides with \emph{semantic} or \emph{syntactic} break in the syntax. For examples, see the code below.
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+A = [ 1, 0.5 , 5; 4, ...
+42.23, 33; 0.33, ...
+pi, 1];
+
+a = alpha*(u+v)+beta*...
+sin(p'*q)-t...
+*circleArea(10);
+\end{lstlisting}
+Unsemantic line breaks decrease the readability. Neither the shape of the matrix, nor the number of summands in the second expression is clear.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+A = [ 1   , 0.5  , 5 ; ...
+      4   , 42.23, 33; ...
+      0.33, pi   , 1   ];
+
+a = alpha* (u+v)     ...
+  + beta*  sin(p'*q) ...
+  - t*     circleArea(10);
+\end{lstlisting}
+The shape and contents of the matrix, as well as the elements of the second expression, are immediately visible to the programmer.
+\end{minipage}
+\hfill
+
+\paragraph{Spaces in expressions} Closely related to this is the usage of spaces in expressions. The rule is, again: put spaces there where \matlab{}'s syntax would. Consider the following example.
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+aValue = 5+6 / 3*4;
+\end{lstlisting}
+This spacing suggests that the value of \lstinline!aValue! will be $11/7$, which is of course not the case.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+aValue = 5 + 6/3*4;
+\end{lstlisting}
+Much better, as the the fact that the addition is executed last gets reflected by according spacing.
+\end{minipage}
+\hfill
+
+
+
+\subsection{Magic numbers -- \cleansymbol\cleansymbol\cleansymbol}
+
+When coding, sometimes you consider a value constant because you do not intend to change it anytime soon. Take, for example, a program that determines whether or not a given point sits outside a circle of radius $1$ with center $(1,1)$ and at the same time inside a square of edge length $2$, right enclosing the circle (see \cite{Hull:2006:CCM}).
+
+When finished, the code will contain a couple of \lstinline!1!'s but it'll not be clear if they are distinct or refer to the same abstract value (see below). Those hardcoded numbers are frequently called \emph{magic numbers}, as they do what they are supposed to do, but one can't easily tell why. When you, after some time, change your mind and you do want to change the value of the radius, it'll be rather difficult to identify those \lstinline!1!'s which actually refer to it.
+
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}\label{example:magic-numbers}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+x = 2; y = 0;
+
+
+
+
+pointsDistance = ...
+  norm( [x,y]-[1,1] );
+
+isInCircle = ...
+      (pointsDistance < 1);
+isInSquare = ...
+     ( abs(x-1)<1 ) && ...
+     ( abs(y-1)<1 );
+
+if ~isInCircle && isInSquare
+% [...]
+\end{lstlisting}
+It is not immediately clear if the various \lstinline!1!'s do in the code and whether or not they represent one entity. These numbers are called \emph{magic numbers}.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+x = 2; y = 0;
+
+radius = 1;
+xc = 1; yc = 1;
+
+pointsDistance = ...
+  norm( [x,y]-[xc,yc] );
+
+isInCircle = ...
+ (pointsDistance < radius);
+isInSquare = ...
+ ( abs(x-xc)<radius ) && ...
+ ( abs(y-yc)<radius );
+
+if ~isInCircle && isInSquare
+% [...]
+\end{lstlisting}
+The meaning of the variable \lstinline!radius! is can be instantly seen and its value easily altered.
+\end{minipage}
+\hfill
+
+
+\subsection{Comments  -- \cleansymbol\cleansymbol\cleansymbol\cleansymbol\cleansymbol}
+
+The most valuable character for clean \matlab{} code is `\lstinline!%!',
+the comment character. All tokens after it on the same line are ignored, and the space can be used to explain the source code in English (or your tribal language, if you prefer).
+
+\paragraph{Documentation -- \cleansymbol\cleansymbol\cleansymbol\cleansymbol\cleansymbol}
+There should be a big fat neon-red blinking frame around this paragraph, as documentation is \emph{the} single most important aspect about clean and readable code. Unfortunately, it also takes the longest to write which is why you will find undocumented source code everywhere you go.
+
+Look at listing \ref{listing:fences} for a suggestion for quick and clear documentation, and see if you can do it yourself!
+
+
+\paragraph{Structuring elements -- \cleansymbol\cleansymbol\cleansymbol}
+It is always useful to have the beginning and the end of the function not only indicated by the respective keywords, but also by something more visible. Consider building `fences' with commented `\lstinline!#!', `\lstinline!=!', or `\lstinline!-!' characters, to visually separate distinct parts of the code. This comes in very handy when there are multiple functions in one source file, for example, or when there is a \lstinline!for!-loop that stretches over that many lines that you can't easily find the corresponding \lstinline!end! anymore.
+
+For a (slightly exaggerated) example, see listing \ref{listing:fences}.
+
+\begin{lstlisting}[float,label={listing:fences},caption={Function in which \lstinline!-!-fences are used to emphasize the functionally separate sections of the code.}]
+% ===========================================================
+% *** FUNCTION timeIteration
+% ***
+% *** Takes a starting vector u and performs n time steps.
+% ***
+% ===========================================================
+function out = timeIteration( u, n )
+
+  % ---------------------------------------------------------
+  % set the parameters
+  tau   = 1.0;
+  kappa = 1.0;
+  out   = u;
+  % ---------------------------------------------------------
+
+
+  % ---------------------------------------------------------
+  % do the iteration
+  for k = 1:n
+
+      [out, flag] = proceedStep( out, tau, kappa );
+
+      % - - - - - - - - - - - - - - - - - - - - - - - - - -
+      % warn if something went wrong
+      if ~flag
+          warning( [ 'myProg:timeIteration', ...
+                     'proceedStep returns flag ', flag ] );
+      end
+      % - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  end
+  % ---------------------------------------------------------
+
+end
+% ===========================================================
+% *** END FUNCTION timeIteration
+% ===========================================================
+\end{lstlisting}
+
+
+\subsection{Usage of brackets -- \cleansymbol\cleansymbol}
+Of course, there is a clearly defined operator precedence list in \matlab{} (see table \ref{table:operator-precedence}) that makes sure that for every \matlab{} expression, involving any unary or binary operator, there is a unique way of evaluation. It is quite natural to remember that \matlab{} treats multiplication (\lstinline!*!) before addition (\lstinline!+!), but things may get less intuitive when it comes to logical operators, or a mix of numerical and logical ones (although this case is admittedly very rare).
+
+Of course one can always look those up (see table \ref{table:operator-precedence}), but to save the work one could equally quick just insert a pair of bracket at the right spot, although they may be unnecessary -- this will certainly help avoiding confusion.
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+isGood =  a<0 ...
+       && b>0 || k~=0;
+\end{lstlisting}
+Without knowing if \matlab{} first evaluates the short-circuit AND `\lstinline!&&!' or the short-circuit OR `\lstinline!||!', it is impossible to predict the value of \lstinline!isGood!.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+isGood = ( a<0 && b>0 ) ...
+       || k~=0;
+\end{lstlisting}
+With the (unnecessary) brackets, the situation is clear.
+\end{minipage}
+\hfill
+
+
+\begin{table}
+\begin{enumerate}
+\item Parentheses \lstinline!()!
+\item Transpose (\lstinline!.'!), power (\lstinline!.^!), complex conjugate transpose (\lstinline!'!), matrix power (\lstinline!^!)
+\item Unary plus (\lstinline!+!), unary minus (\lstinline!-!), logical negation (\lstinline!~!)
+\item Multiplication (\lstinline!.*!), right division (\lstinline!./!), left division (\lstinline!.\!), matrix multiplication (\lstinline!*!), matrix right division (\lstinline!/!), matrix left division (\lstinline!\!)
+\item Addition (\lstinline!+!), subtraction (\lstinline!-!)
+\item Colon operator (\lstinline!:!)
+\item Less than (\lstinline!<!), less than or equal to (\lstinline!<=!), greater than (\lstinline!>!), greater than or equal to (\lstinline!>=!), equal to (\lstinline!==!), not equal to (\lstinline!~=!)
+\item Element-wise AND (\lstinline!&!)
+\item Element-wise OR (\lstinline!|!)
+\item Short-circuit AND (\lstinline!&&!)
+\item Short-circuit OR (\lstinline!||!)
+\end{enumerate}
+\caption{\matlab{} operator precedence list.}
+\label{table:operator-precedence}
+\end{table}
+
+
+\subsection{Errors and warnings -- \cleansymbol\cleansymbol}
+
+No matter how careful you design your code, there will probably be users who manage to crash it, maybe with bad input data. As a matter of fact, this is not really uncommon in numerical computation that things go fundamentally wrong.
+
+\begin{example}
+You write a routine that defines an iterative process to find the solution $u^* = A^{-1}b$ of a linear equation system (think of conjugate gradients). For some input vector $u$, you hope to find $u^*$ after a finite number of iterations. However, the iteration will only converge under certain conditions on $A$; and if $A$ happens to not fulfill tho, the code will misbehave in some way.
+\end{example}
+
+It'd be bad practice to assume that the user (or, you) is always provides input data to your routine fulfilling all necessary conditions, so you would certainly like to intercept. Notifying the user that something went wrong can certainly be done by \lstinline!disp()! or \lstinline!fprintf()! commands, but the clean way out is using \lstinline!warning()! and \lstinline!error()!. -- The latter differs from the former only in terminating the execution of the program right after having issued its message.
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+tol = 1e-15;
+rho = norm(r);
+
+
+
+while abs(rho)>tol
+
+  r   = oneStep( r );
+  rho = norm( r );
+end
+
+
+
+
+
+% process solution
+
+\end{lstlisting}
+Iteration over a variable \lstinline!r! that is supposed to be smaller than \lstinline!tol! after some iterations. If that fails, the loop will never exit and occupy the CPU forever.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+tol  = 1e-15;
+rho  = norm(r);
+kmax = 1e4;
+
+k = 0;
+while abs(rho)>tol && k<kmax
+  k   = k+1;
+  r   = oneStep( r );
+  rho = norm( r );
+end
+
+if k==kmax
+  warning('myFun:noConv',...
+        'Didn''t converge.')
+else
+  % process solution
+end
+\end{lstlisting}
+Good practice: there is a maximum number of iterations. When it has been reached, the iteration failed. Throw a warning in that case.
+\end{minipage}
+\hfill
+
+Although you could just evoke \lstinline!warning()! and \lstinline!error()! with a single string as argument (such as \lstinline~error('Something went wrong!'~), good style programs will leave the user with a clue \emph{where} the error has occurred, and of what type the error is (as mnemonic). This information is contained in the so-called \emph{message ID}.
+
+The \matlab{} help page contain quite a bit about message IDs, for example:
+\begin{quotation}
+The \lstinline!msgID! argument is a unique message identifier string that \matlab{} attaches to the error message when it throws the error. A message identifier has the format \lstinline!component:mnemonic!. Its purpose is to better identify the source of the error.
+\end{quotation}
+
+
+\subsection{Switch statements -- \cleansymbol\cleansymbol}
+
+\lstinline!switch! statements are in use whenever one would otherwise have to write a conditional statement with several \lstinline!elseif! statements. They are also particularly popular when the conditional is a string comparison (see example below).
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+switch pet
+  case 'Bucky'
+    feedCarrots();
+  case 'Hector'
+    feedSausages();
+
+
+
+end
+\end{lstlisting}
+When none of the cases matches, the algorithm will just skip and continue.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+switch pet
+  case 'Bucky'
+    feedCarrots();
+  case 'Hector'
+    feedSausages();
+  otherwise
+    error('petCare:feed',...
+          'Unknown pet.'
+end
+\end{lstlisting}
+The unexpected case is intercepted.
+\end{minipage}
+\hfill
+
+
+
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen},float,caption={The same code as in listing \ref{listing:prime1}, with rules of style applied. It should now be somewhat easier to maintain and improve the code. Do you have ideas how to speed it up?}]
+% ======================================================
+% *** FUNCTION prime
+% ***
+% *** Returns all prime number below or equal to N.
+% ***
+% ======================================================
+function p = prime( N )
+
+  for i = 2:N
+      % checks if a number is prime
+      isPrime = 1;
+      for j = 2:i-1
+          if ~mod(i, j)
+              isPrime = 0;
+              break
+          end
+      end
+
+      % print to screen if true
+      if isPrime
+          fprintf( '%d is a prime number.\n', i );
+      end
+  end
+
+end
+% ======================================================
+% *** END FUNCTION prime
+% ======================================================
+\end{lstlisting}

@@ -1,0 +1,118 @@
+% common header for all exercise sheets
+\documentclass[%
+paper=a4,
+parskip=half,
+oneside,
+bibliography=totoc
+]{scrartcl}
+
+% don't number subsections and deeper
+\setcounter{secnumdepth}{1}
+
+% \usepackage{amsbsy,amsmath,amsthm,amsfonts,amssymb,color,xcolor}
+\usepackage{amsthm}
+\usepackage{graphicx}
+
+% use the latin modern fonts and a more modern encoding
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% get the fine points of typography
+\usepackage{microtype}
+
+\usepackage{math-abbreviations}
+
+% \titlehead{\includegraphics[width=3cm]{../../logos/logo}}
+\subject{\matlab{} in numerical analysis}
+\title{Guidelines for writing clean and fast code in \matlab{}}
+
+\author{Nico Schl\"omer\thanks{Universiteit Antwerpen, Middelheimlaan 1, 2020 Antwerpen, Belgium. E-mail: \href{mailto:nico.schloemer@ua.ac.be}{\nolinkurl{nico.schloemer@ua.ac.be}}.}}
+\date{\today}
+% \publishers{publishers}
+
+\usepackage{listings}  % include highlighted source code
+\lstset{% general command to set parameter(s)
+basicstyle=\ttfamily,
+keywordstyle=\color{matlabeditorkeyword},
+identifierstyle=,
+commentstyle=\color{matlabeditorcomment},
+stringstyle=\color{matlabeditorstring},
+showstringspaces=false,     % no special string spaces
+frame=single,
+language=Matlab,
+showlines=true, % don't suppress empty lines
+captionpos=b,
+abovecaptionskip=2ex
+}
+
+\usepackage{subfig}
+
+\usepackage{graphicx}
+
+% have text float around images
+\usepackage{floatflt}
+
+\usepackage{tikz}
+
+\usepackage{booktabs}
+
+\theoremstyle{plain}
+% \theoremstyle{definition}
+\newtheorem*{remark}{Remark}
+\newtheorem*{example}{Example}
+
+\usepackage[
+bookmarks,
+colorlinks=false,
+pdftitle={Guidelines for writing clean and fast code in MATLAB(R)},
+pdfauthor={Nico Schl\"omer}
+]{hyperref}
+
+% get advanced citing capabilities and cite by number
+% \usepackage[numbers]{natbib}
+% \bibliographystyle{plainnat}
+\usepackage[%
+bibtex8=true,
+hyperref=auto
+]{biblatex}
+\bibliography{bibtex/matlab-tipsntricks}
+
+
+\usepackage{marvosym}
+\newcommand\cleansymbol{\AtSixty}
+\newcommand\fastsymbol{\Lightning}
+
+\newcommand\matlab{\mbox{MATLAB\textsuperscript{\textregistered}}}
+
+% get the euro symbol
+\usepackage{eurosym}
+
+% get the trademark symbol correct
+\usepackage{textcomp}
+
+\usepackage{siunitx}
+\sisetup{obeyall}
+\newcommand\extime[1]{\textbf{\SI{#1}{\second}}}
+
+% declare colors
+\usepackage{xcolor}
+\definecolor{goodgreen}{cmyk}{1,0,1,0}
+\definecolor{badred}   {cmyk}{0,1,1,0}
+% \definecolor{myblue}   {cmyk}{1,1,0,0}
+% \definecolor{matlabeditorcomment}{cmyk}{0.87,0.45,0.87,0}
+\definecolor{matlabeditorcomment}{RGB}{34,139,34}
+\definecolor{matlabeditorkeyword}{RGB}{0,0,255}
+\definecolor{matlabeditorstring} {RGB}{181,81,243}
+
+
+%\usepackage[boxed]{algorithm2e} % pretty-print pseudo code
+%\restylealgo{boxed}\linesnumbered\dontprintsemicolon
+%\setalcapskip{2ex}
+%\renewcommand{\listalgorithmcfname}{Lijst van algoritmen}%
+%\renewcommand{\algorithmcfname}{Algoritme}%
+
+\DeclareMathOperator{\diag}{diag}
+
+%\renewcommand{\norm}[1]{\ensuremath{\left\|#1\right\|}}
+% \providecommand{\der}[2]{\frac{\partial #1}{\partial #2}}
+% \providecommand{\dertwo}[2]{\frac{\partial^2 #1}{\partial #2^2}}

@@ -1,0 +1,36 @@
+\input{header}
+
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document is aimed at \matlab{} beginners who already know the syntax but feel are not yet quite experienced with it. Its goal is to give a number of hints which enable the reader to write quality \matlab{} programs and to avoid commonly made mistakes.
+
+There are three major independent chapters which may very well be read separately. Also, the individual chapters each split up into one or two handful of chunks of information. In that sense, this document is really a slightly extended list of dos and don'ts.
+
+Chapter 1 describes some aspects of \emph{clean} code. The impact of a subsection for the cleanliness of the code is indicated by one to five \cleansymbol--symbols, where five \cleansymbol's want to say that following the given suggestion is of great importance for the comprehensibility of the code.
+
+Chapter 2 describes how to speed up the code and is largely a list of mistakes that beginners may tend to make. This time, the \fastsymbol-symbol represents the amount of speed that you could gain when sticking to the hints given in the respective section.
+
+This guide is written as part of a basic course in numerical analysis, most examples and codes will hence tend to refer to numerical integration or differential equations. However, almost all aspects are of general nature and will also be of interest to anyone using \matlab{}.
+\end{abstract}
+
+\tableofcontents
+
+
+\input{matlab-alternatives.tex}
+\input{clean-code.tex}
+\input{fast-code.tex}
+\input{tipsntricks.tex}
+
+\nocite{
+Getreuer:2004:WFM,
+Acklam:2003:MAM,
+Moler:2004:NCM,
+Moler:2008:EM}
+\printbibliography
+
+\end{document}
