@@ -213,7 +213,7 @@ linearity, distance_to_circle, figure_label.
 \end{lstlisting}
 This technique, although readable, is not commonly used for variable names in other languages. Also, some feel the underscore character is not quite easily typable on the keyboard.
 
-When still using the underscore notation, watch out for variable names in \matlab{}'s plots: its \TeX-interpreter will treat the underscore a switch to subscript and \lstinline!distance_to_circle! will read \lstinline!distance!$_{\text{\lstinline!t!}}$\lstinline!o!$_{\text{\lstinline!c!}}$\lstinline!ircle! in the plot.
+When still using the underscore notation, watch out for variable names in \matlab{}'s plots: its \TeX-interpreter will treat the underscore as a switch to subscript and a variable name such as \lstinline!distance_to_circle! will read \lstinline!distance!$_{\text{\lstinline!t!}}$\lstinline!o!$_{\text{\lstinline!c!}}$\lstinline!ircle! in the plot.
 
 \begin{remark}
 Using the hyphen `\lstinline!-!' as a separator cannot be considered: \matlab{} will immediately interpret `\lstinline!-!' as the minus sign, \lstinline!distance-to-circle! is ``\lstinline!distance! minus \lstinline!to! minus \lstinline!circle!''. The same holds for function names.

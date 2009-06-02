@@ -120,7 +120,40 @@ The \lstinline!sin()! function in \matlab{} hence takes a vector as argument and
 
 
 \paragraph{The \lstinline!find()! function and logical indexing}
-TODO
+
+It may sometimes happen that one needs to refer to all elements in a \matlab{} array which fulfil certain logical conditions, for example being \lstinline!NaN! (Not a Number). Traditionally, one would iterate through the array element by element, check for the condition and apply changes. With \matlab{}, this is not the preferred way to handle the situation.
+
+One would rather make use of the so-called \emph{logical indexing} in which logical conditions are used to refer to a set of indices. For example, \lstinline!x( isNaN(x) )! returns all elements in the array \lstinline!x! which are of type \lstinline!NaN!; \lstinline!x( find(x>0) )! refers to all elements in \lstinline!x! which are greater than zero. An even shorter (and faster) equivalent of the latter is \lstinline!x( x>0 )!.
+
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
+for i=1:n
+    for j=1:n
+        if A(i,j)<0
+            A(i,j) = 0;
+        end
+    end
+end
+\end{lstlisting}
+Setting all negative elements in a matrix to zero.  Execution time: approx. \extime{1.11}.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.45\textwidth}
+\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+
+
+
+A( A<0 ) = 0;
+
+
+
+\end{lstlisting}
+One line replacement using logical indexing.  Execution time: approx. \extime{0.30}.
+\end{minipage}
+\hfill
+
+See also \cite{Mathworks:2001:MIM}.
 
 % \begin{remark}
 % Of course, things can get somewhat more difficult to vectorize, for example when the commands within the loop make contain more than just `\lstinline!i!' or `\lstinline!i-1!' as index references like above. There is, however, almost always a way to vectorize. If you don't know further, see \cite{Mathworks:2009:CVG}.
