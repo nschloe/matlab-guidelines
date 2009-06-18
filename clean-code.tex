@@ -1,3 +1,31 @@
+% ================================================================================
+%
+% Copyright (c) 2009, Nico Schlömer
+% All rights reserved.
+% 
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are
+% met:
+% 
+%     * Redistributions of source code must retain the above copyright
+%       notice, this list of conditions and the following disclaimer.
+%     * Redistributions in binary form must reproduce the above copyright
+%       notice, this list of conditions and the following disclaimer in
+%       the documentation and/or other materials provided with the distribution
+% 
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+% POSSIBILITY OF SUCH DAMAGE.
+%
+% ================================================================================
 \newpage
 \section{Coding clean}
 
@@ -337,7 +365,7 @@ The shape and contents of the matrix, as well as the elements of the second expr
 \begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
 aValue = 5+6 / 3*4;
 \end{lstlisting}
-This spacing suggests that the value of \lstinline!aValue! will be $11/7$, which is of course not the case.
+This spacing suggests that the value of \lstinline!aValue! will be $11/12$, which is of course not the case.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -509,10 +537,10 @@ With the (unnecessary) brackets, the situation is clear.
 No matter how careful you design your code, there will probably be users who manage to crash it, maybe with bad input data. As a matter of fact, this is not really uncommon in numerical computation that things go fundamentally wrong.
 
 \begin{example}
-You write a routine that defines an iterative process to find the solution $u^* = A^{-1}b$ of a linear equation system (think of conjugate gradients). For some input vector $u$, you hope to find $u^*$ after a finite number of iterations. However, the iteration will only converge under certain conditions on $A$; and if $A$ happens to not fulfill tho, the code will misbehave in some way.
+You write a routine that defines an iterative process to find the solution $u^* = A^{-1}b$ of a linear equation system (think of conjugate gradients). For some input vector $u$, you hope to find $u^*$ after a finite number of iterations. However, the iteration will only converge under certain conditions on $A$; and if $A$ happens not to fulfill those, the code will misbehave in some way.
 \end{example}
 
-It'd be bad practice to assume that the user (or, you) is always provides input data to your routine fulfilling all necessary conditions, so you would certainly like to intercept. Notifying the user that something went wrong can certainly be done by \lstinline!disp()! or \lstinline!fprintf()! commands, but the clean way out is using \lstinline!warning()! and \lstinline!error()!. -- The latter differs from the former only in terminating the execution of the program right after having issued its message.
+It would be bad practice to assume that the user (or, you) always provides input data to your routine fulfilling all necessary conditions, so you would certainly like to conditionally intercept. Notifying the user that something went wrong can certainly be done by \lstinline!disp()! or \lstinline!fprintf()! commands, but the clean way out is using \lstinline!warning()! and \lstinline!error()!. -- The latter differs from the former only in that it terminates the execution of the program right after having issued its message.
 
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -612,7 +640,7 @@ The unexpected case is intercepted.
 % ======================================================
 % *** FUNCTION prime
 % ***
-% *** Returns all prime number below or equal to N.
+% *** Returns all prime numbers below or equal to N.
 % ***
 % ======================================================
 function p = prime( N )
