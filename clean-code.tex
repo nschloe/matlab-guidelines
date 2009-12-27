@@ -448,7 +448,7 @@ It is always useful to have the beginning and the end of the function not only i
 
 For a (slightly exaggerated) example, see listing \ref{listing:fences}.
 
-\begin{lstlisting}[float,label={listing:fences},caption={Function in which \lstinline!-!-fences are used to emphasize the functionally separate sections of the code.}]
+\begin{lstlisting}[float,label={listing:fences},caption={Function in which `\lstinline!-!'-fences are used to emphasize the functionally separate sections of the code.}]
 % ===========================================================
 % *** FUNCTION timeIteration
 % ***
@@ -474,7 +474,7 @@ function out = timeIteration( u, n )
       % - - - - - - - - - - - - - - - - - - - - - - - - - -
       % warn if something went wrong
       if ~flag
-          warning( [ 'myProg:timeIteration', ...
+          warning( [ 'timeIteration:errorFlag', ...
                      'proceedStep returns flag ', flag ] );
       end
       % - - - - - - - - - - - - - - - - - - - - - - - - - -
