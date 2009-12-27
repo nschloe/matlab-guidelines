@@ -147,8 +147,7 @@ Does the same thing using vector notation. Execution time: approx. \extime{0.12}
 The \lstinline!sin()! function in \matlab{} hence takes a vector as argument and acts as of it operated on each element of it. Almost all \matlab{} functions have this capability, so make use of it if you can!
 
 
-\paragraph{Vector indexing and boolean indexing}\label{sec:logicalIndexing}
-
+\paragraph{Vector indexing and boolean indexing.}\label{sec:logicalIndexing}
 When dealing with vectors or matrices, it may sometimes happen that one has to work only on certain entries of the object, e.g., those with odd index.
 
 Consider the following three different possibilties of setting the \emph{odd} entries of a vector \lstinline!v! to $0$.
@@ -263,10 +262,10 @@ See also \cite{Mathworks:2001:MIM}.
 
 
 \subsection{Solving a linear equation system -- \cleansymbol\cleansymbol\fastsymbol\fastsymbol\fastsymbol}
-When being confronted with a standard linear equation system of the form $Au=b$, the solution can be written down as $u = A^{-1}b$ if $A$ is regular. It may now be quite seductive to translate this into \lstinline!u = inv(A)*b! in \matlab{} notation. Though this step will certainly yield the correct solution (neglecting round-off errors, which admitted can be quite big in certain cases), it would take quite a long time. The reason for this is the fact that the computer actually does more work then required. What you tell \matlab{} to do here is to
+When being confronted with a standard linear equation system of the form $Au=b$, the solution can be written down as $u = A^{-1}b$ if $A$ is regular. It may now be quite seductive to translate this into \lstinline!u = inv(A)*b! in \matlab{} notation. Though this step will certainly yield the correct solution (neglecting round-off errors, which admittedly can be quite large in certain cases), it would take quite a long time to execute. The reason for this is the fact that the computer actually does more work then required. What you tell \matlab{} to do here is to
 \begin{enumerate}
-\item explicitly calculate the inverse of \lstinline!A! and
-\item multiply the result with \lstinline!u!.
+\item explicitly calculate the inverse of \lstinline!A!, store it in a temporary matrix, and then
+\item multiply the this matrix with \lstinline!u!.
 \end{enumerate}
 However, one is most often not interested in the explicit form of $A^{-1}$, but only the final result $A^{-1}b$. The proper way out is \matlab{}'s \lstinline!\! (backslash) operator (or equivalently \lstinline!mldivide()!) which exactly serves the purpose of solving an equation system with Gau{\ss}ian elimination.
 
