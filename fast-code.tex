@@ -157,7 +157,7 @@ Consider the following three different possibilties of setting the \emph{odd} en
 \begin{lstlisting}[framerule=1pt,rulecolor=\color{goodgreen}]
 % [...] create v
 
-
+n = length(v);
 
 for k = 1:2:n
   v(k) = 0;
@@ -170,7 +170,7 @@ Classical loop of the entries of interest (\extime{1.04}).
 \begin{lstlisting}[framerule=1pt,rulecolor=\color{mediocre}]
 % [...] create v
 
-
+n = length(v);
 
 
 v(1:2:n) = 0;
@@ -464,7 +464,7 @@ for i = 1:k
   u = U\( L\u );
 end
 \end{lstlisting}
-Computing $u = A^{-k}u_0$ by LU-factoring the matrix, then solving with the LU factors. Execution time: \extime{5.35}. Of course, when increasing  the number $k$ of iterations, the speed gain compared to the `\lstinline!A\!' will  be more and more dramatic.
+Computing $u = A^{-k}u_0$ by $LU$-factoring the matrix, then solving with the $LU$ factors. Execution time: \extime{5.35}. Of course, when increasing  the number $k$ of iterations, the speed gain compared to the `\lstinline!A\!' will  be more and more dramatic.
 \end{minipage}
 \hfill
 
