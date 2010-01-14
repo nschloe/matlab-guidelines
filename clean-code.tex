@@ -619,7 +619,18 @@ When none of the cases matches, the algorithm will just skip and continue.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
-\begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+% \begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
+% switch pet
+%   case 'Bucky'
+%     feedCarrots();
+%   case 'Hector'
+%     feedSausages();
+%   otherwise
+%     error('petCare:feed',...
+%           'Unknown pet.'
+% end
+% \end{lstlisting}
+\begin{minted}[frame=single,framerule=2pt,rulecolor=\color{goodgreen}]{matlab}
 switch pet
   case 'Bucky'
     feedCarrots();
@@ -629,7 +640,7 @@ switch pet
     error('petCare:feed',...
           'Unknown pet.'
 end
-\end{lstlisting}
+\end{minted}
 The unexpected case is intercepted.
 \end{minipage}
 \hfill

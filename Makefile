@@ -15,7 +15,7 @@ TARGET:=main
 default: main
 
 main:
-	@$(PDFLATEX) $(TARGET)
+	@$(PDFLATEX) -shell-escape $(TARGET)
 
 .PHONY: clean
 
