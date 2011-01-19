@@ -2,8 +2,8 @@
 
 # ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
 
-ECHOCMD:=/bin/echo -e
-PDFLATEX:=pdflatex
+LATEXMK:=latexmk
+LATEXMK_OPTIONS:=-pdf
 
 # ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
 
@@ -15,25 +15,19 @@ TARGET:=main
 default: main
 
 main:
-	@$(PDFLATEX) -shell-escape $(TARGET)
+	@$(LATEXMK) $(LATEXMK_OPTIONS) $(TARGET)
 
 .PHONY: clean
 
 clean:
-	@rm -f $(TARGET).aux \
-	       $(TARGET).log \
-	       $(TARGET).nav \
-	       $(TARGET).out \
-	       $(TARGET).snm \
-	       $(TARGET).toc \
-	       $(TARGET).vrb \
-	       $(TARGET).pdf \
-	       $(TARGET).dvi \
-	       $(TARGET).ps  \
-	       $(TARGET).bbl \
-	       $(TARGET).blg \
-	       $(TARGET).thm \
-	       $(TARGET).brf \
-	       missfont.log  \
-	       x.log
-	@rm -f *~
+	$(LATEXMK) -C
+	@rm -f $(TARGET)-blx.bib \
+               $(TARGET).snm \
+               $(TARGET).nav \
+               $(TARGET).bbl \
+               $(TARGET).thm \
+               $(TARGET).run.xml \
+               $(TARGET).pyg \
+               $(TARGET).out.pyg \
+               missfont.log \
+               *~

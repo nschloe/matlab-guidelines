@@ -1,6 +1,6 @@
 % ================================================================================
 %
-% Copyright (c) 2009, Nico Schlömer
+% Copyright (c) 2009--2011, Nico Schlömer
 % All rights reserved.
 % 
 % Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,43 @@
 \newpage
 \section{Other tips \& tricks}
 
-\begin{listing}
-\begin{minted}[frame=single,framerule=2pt,color=\color{badred}]{matlab}
+% \begin{listing}
+% \begin{minted}[frame=single,framerule=2pt,color=\color{badred}]{matlab}
+% % ===================================================
+% % *** FUNCTION simpson
+% % ***
+% % *** Implements Simpson's rule for integrating
+% % *** the sine function over [a,b] with granularity
+% % *** h.
+% % ***
+% % ===================================================
+% function int = simpson( a, b, h )
+% 
+%   x = a:h:b;
+% 
+%   int = 0;
+%   n   = length(x);
+%   mid = (x(1:n-1) + x(2:n)) / 2;
+%   int = sum( h/6 * (    sin(x(1:n-1)) ...
+%                     + 4*sin(mid     ) ...
+%                     +   sin(x(2:n  )) ) );
+% 
+% end
+% % ===================================================
+% % *** END FUNCTION simpson
+% % ===================================================
+% \end{minted}
+% \caption{Implementation of Simpson's rule for numerically integrating a function (here: \lstinline!sin!) between \lstinline!a! and \lstinline!b!. Note the usage of the vector notation to speed up the function. Also note that \lstinline!sin! is hardcoded into the routine, and needs to be changed each time we want to change the function. In case one is interested in calculating the integral of $f(x) = \exp(\sin(\frac{1}{x})) / \tan(\sqrt{1-x^4})$, this could get quite messy.}
+% \label{listing:simpson1}
+% \end{listing}
+
+
+\begin{lstlisting}[
+framerule=2pt,
+float,
+label={listing:simpson1},
+caption={Implementation of Simpson's rule for numerically integrating a function (here: \lstinline!sin!) between \lstinline!a! and \lstinline!b!. Note the usage of the vector notation to speed up the function. Also note that \lstinline!sin! is hardcoded into the routine, and needs to be changed each time we want to change the function. In case one is interested in calculating the integral of $f(x) = \exp(\sin(\frac{1}{x})) / \tan(\sqrt{1-x^4})$, this could get quite messy.},
+rulecolor=\color{badred}]
 % ===================================================
 % *** FUNCTION simpson
 % ***
@@ -54,42 +89,7 @@ end
 % ===================================================
 % *** END FUNCTION simpson
 % ===================================================
-\end{minted}
-\caption{Implementation of Simpson's rule for numerically integrating a function (here: \lstinline!sin!) between \lstinline!a! and \lstinline!b!. Note the usage of the vector notation to speed up the function. Also note that \lstinline!sin! is hardcoded into the routine, and needs to be changed each time we want to change the function. In case one is interested in calculating the integral of $f(x) = \exp(\sin(\frac{1}{x})) / \tan(\sqrt{1-x^4})$, this could get quite messy.}
-\label{listing:simpson1}
-\end{listing}
-
-
-% \begin{lstlisting}[
-% framerule=2pt,
-% float,
-% label={listing:simpson1},
-% caption={Implementation of Simpson's rule for numerically integrating a function (here: \lstinline!sin!) between \lstinline!a! and \lstinline!b!. Note the usage of the vector notation to speed up the function. Also note that \lstinline!sin! is hardcoded into the routine, and needs to be changed each time we want to change the function. In case one is interested in calculating the integral of $f(x) = \exp(\sin(\frac{1}{x})) / \tan(\sqrt{1-x^4})$, this could get quite messy.},
-% rulecolor=\color{badred}]
-% % ===================================================
-% % *** FUNCTION simpson
-% % ***
-% % *** Implements Simpson's rule for integrating
-% % *** the sine function over [a,b] with granularity
-% % *** h.
-% % ***
-% % ===================================================
-% function int = simpson( a, b, h )
-% 
-%   x = a:h:b;
-% 
-%   int = 0;
-%   n   = length(x);
-%   mid = (x(1:n-1) + x(2:n)) / 2;
-%   int = sum( h/6 * (    sin(x(1:n-1)) ...
-%                     + 4*sin(mid     ) ...
-%                     +   sin(x(2:n  )) ) );
-% 
-% end 
-% % ===================================================
-% % *** END FUNCTION simpson
-% % ===================================================
-% \end{lstlisting}
+\end{lstlisting}
 
 \subsection{Functions as arguments -- \cleansymbol\cleansymbol\cleansymbol}
 
