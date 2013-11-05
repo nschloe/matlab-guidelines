@@ -1,18 +1,18 @@
-% ================================================================================
+% =============================================================================
 %
 % Copyright (c) 2009--2011, Nico Schlömer
 % All rights reserved.
-% 
+%
 % Redistribution and use in source and binary forms, with or without
 % modification, are permitted provided that the following conditions are
 % met:
-% 
+%
 %     * Redistributions of source code must retain the above copyright
 %       notice, this list of conditions and the following disclaimer.
 %     * Redistributions in binary form must reproduce the above copyright
 %       notice, this list of conditions and the following disclaimer in
 %       the documentation and/or other materials provided with the distribution
-% 
+%
 % THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 % AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 % IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -25,22 +25,48 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 % POSSIBILITY OF SUCH DAMAGE.
 %
-% ================================================================================
+% =============================================================================
 \newpage
-\section{Coding fast}
+\section{Fast code}
 
-As a \matlab{} beginner, it is quite easy to use code that just works\texttrademark{} but comparing to compiled programs of higher programming languages is very slow. The benefit of the relatively straightforward way of programming in \matlab{} (where no such things as explicit memory allocation, pointers, or data types ``come in your way'') needs to be paid with the knowledge of how to avoid fundamental mistakes. Fortunately, there are only a few \emph{big ones}, so when you browse through this section and stick to the given hints, you can certainly be quite confident about your code.
+As a \matlab{} beginner, it is quite easy to use code that just
+works\texttrademark{} but comparing to compiled programs of higher programming
+languages is very slow. The benefit of the relatively straightforward way of
+programming in \matlab{} (where no such things as explicit memory allocation,
+pointers, or data types ``come in your way'') needs to be paid with the
+knowledge of how to avoid fundamental mistakes. Fortunately, there are only a
+few \emph{big ones}, so when you browse through this section and stick to the
+given hints, you can certainly be quite confident about your code.
 
 \subsection{Using the profiler}
 
-The first step in optimizing the speed of your program is finding out where it is actually going slow. In traditional programming, bottlenecks are not quite easily found, and the humble coder would maybe insert timer commands around those chunks of code where he or she suspects the delay to actually measure its performance. You can do the same thing in \matlab{} (using \lstinline!tic! and \lstinline!toc! as timers) but there is a much more convenient way: \emph{the profiler}.
+The first step in optimizing the speed of your program is finding out where it
+is actually going slow. In traditional programming, bottlenecks are not quite
+easily found, and the humble coder would maybe insert timer commands around
+those chunks of code where he or she suspects the delay to actually measure
+its performance. You can do the same thing in \matlab{} (using \lstinline!tic!
+and \lstinline!toc! as timers) but there is a much more convenient way:
+\emph{the profiler}.
 
-The profiler is actually a wrapper around your whole program that measures the execution time of each and every single line of code and depicts the result graphically. This way, you can very quickly track down the lines that keep you from going fast. See figure \ref{figure:profiler} for an example output.
+The profiler is actually a wrapper around your whole program that measures the
+execution time of each and every single line of code and depicts the result
+graphically. This way, you can very quickly track down the lines that keep you
+from going fast. See figure~\ref{figure:profiler} for an example output.
 
 \begin{figure}
 \centering
-\subfloat[][Evoking the profiler through the graphical user interface.]{\includegraphics[height=5cm]{figures/matlab-open-profiler.png}}\\
-\subfloat[][Part of the profiler output when running the routine of section on magic numbers (see page \pageref{example:magic-numbers}) one million times. Clearly, the \lstinline!norm! command takes longest to execute, so when trying to optimize one should start there.]{\includegraphics[height=5cm]{figures/matlab-profiler-circleBox-result.png}}
+\begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[height=5cm]{figures/matlab-open-profiler.png}
+  \subcaption{Evoking the profiler through the graphical user interface.}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[width=6cm]{figures/matlab-profiler-circleBox-result.png}
+  \subcaption{Part of the profiler output when running the routine of section
+  on magic numbers (see page \pageref{example:magic-numbers}) one million
+times. Clearly, the \lstinline!norm! command takes longest to execute, so when
+trying to optimize one should start there.}
+\end{subfigure}
 \caption{Using the profiler.}
 \label{figure:profiler}
 \end{figure}
@@ -52,23 +78,57 @@ Besides the graphical interface, there is also a command line version of the pro
 
 \subsection{The MATtrix LABoratory}
 
-Contrary to common belief, the MAT in \matlab{} doesn't stand for mathematics, but \emph{matrix}. The reason for that is that proper \matlab{} code uses matrix and vector structures as often as possible, prominently at places where higher programming languages such as C of Fortran would rather use loops.
+Contrary to common belief, the MAT in \matlab{} does not stand for mathematics,
+but \emph{matrix}. The reason for that is that proper \matlab{} code uses
+matrix and vector structures as often as possible, prominently at places where
+higher programming languages such as C of Fortran would rather use loops.
 
-The reason for that lies in \matlab{}'s being an interpreted language. That means: There is no need for explicitly compiling the code, you just write it and have in run. The \matlab{} interpreter then scans your code line by line and executes the commands. As you might already suspect, this approach will never be able to compete with compiled source code.
+The reason for that lies in \matlab{}'s being an interpreted language. That
+means: There is no need for explicitly compiling the code, you just write it
+and have in run. The \matlab{} interpreter then scans your code line by line
+and executes the commands. As you might already suspect, this approach will
+never be able to compete with compiled source code.
 
-However, \matlab{}'s internals contain certain precompiled functions which execute basic matrix-vector operations. Whenever the \matlab{} interpreter bumps into a matrix-vector expression, the contents of the matrices are forwarded to the underlying optimized and compiled code which, after execution, returns the result. This approach makes sure that matrix operations in \matlab{} are on par with matrix operations with compiled languages.
+However, \matlab{}'s internals contain certain precompiled functions which
+execute basic matrix-vector operations. Whenever the \matlab{} interpreter
+bumps into a matrix-vector expression, the contents of the matrices are
+forwarded to the underlying optimized and compiled code which, after
+execution, returns the result. This approach makes sure that matrix operations
+in \matlab{} are on par with matrix operations with compiled languages.
 
 \begin{remark}
-Not only for matrix-vector operations, precompiled binaries are provided. Most standard tasks in numerical linear algebra are handled with a customized version of the ATLAS (BLAS) library. This concerns for example commands such as \lstinline!eig()! (for finding the eigenvalues of a matrix), \lstinline!\! (for solving a linear equation system with Gau{\ss}ian\footnote{Johann Carl Friedrich Gau{\ss} (1777--1855), German mathematician and deemed one of the greatest mathematicians of all times. In the English-speaking world, the spelling with `ss' instead of the original `\ss' has achieved wide acceptance -- probably because the `\ss' is not included in the key set of any keyboard layout except the German one.} elimination), and so on.
+Not only for matrix-vector operations, precompiled binaries are provided. Most
+standard tasks in numerical linear algebra are handled with a customized
+version of the ATLAS (BLAS) library. This concerns for example commands such
+as \lstinline!eig()! (for finding the eigenvalues of a matrix), \lstinline!\!
+(for solving a linear equation system with Gau{\ss}ian\footnote{Johann Carl
+Friedrich Gau{\ss} (1777--1855), German mathematician and deemed one of the
+greatest mathematicians of all times. In the English-speaking world, the
+spelling with `ss' instead of the original `\ss' has achieved wide acceptance
+-- probably because the `\ss' is not included in the key set of any keyboard
+layout except the German one.} elimination), and so on.
 \end{remark}
 
 \subsubsection{Matrix pre-allocation -- \fastsymbol\fastsymbol\fastsymbol\fastsymbol\fastsymbol}
 
-When a matrix appears in \matlab{} code for the first time, its contents need to be stored in system memory (RAM). This process is called allocation. To do this, \matlab{} needs to find a place in memory (a range of \emph{addresses}) which is large enough to hold the matrix and assign this place to the matrix. This process is called allocation. Note that typically, matrices are stored continuously in memory, and not split up to here and there. This way, the processor can quickly access its entries without having to look around in the system memory.
+When a matrix appears in \matlab{} code for the first time, its contents need
+to be stored in system memory (RAM). This process is called allocation. To do
+this, \matlab{} needs to find a place in memory (a range of \emph{addresses})
+which is large enough to hold the matrix and assign this place to the matrix.
+This process is called allocation. Note that typically, matrices are stored
+continuously in memory, and not split up to here and there. This way, the
+processor can quickly access its entries without having to look around in the
+system memory.
 
 %  In some higher programming languages, the user needs to explicitly demand space allocation for an object, while in others do this automatically.
 
-Now, what happens if the vector \lstinline!v! gets allocated with $55$ elements by, for example, \lstinline!v=rand(55,1)!, and the user decides later in the code to make it a little bigger, say, \lstinline!v=rand(1100,1)!? Well, obviously \matlab{} has to find a new slot in memory in case the old one is not wide enough to old all the new entries. This isn't so bad if it happens once or twice, but can slow down your code dramatically when a matrix is growing inside a loop, for example.
+Now, what happens if the vector \lstinline!v! gets allocated with $55$
+elements by, for example, \lstinline!v=rand(55,1)!, and the user decides later
+in the code to make it a little bigger, say, \lstinline!v=rand(1100,1)!? Well,
+obviously \matlab{} has to find a new slot in memory in case the old one is
+not wide enough to old all the new entries. This is not so bad if it happens
+once or twice, but can slow down your code dramatically when a matrix is
+growing inside a loop, for example.
 
 
 \hfill
@@ -102,11 +162,19 @@ The previous code example is actually a little misleading as there is a much qui
 
 \subsubsection{Loop vectorization -- \fastsymbol\fastsymbol\fastsymbol\fastsymbol\fastsymbol}
 
-Because of the reasons mentioned in the beginning of this section, you would like to avoid loops wherever you can and try to replace it by a vectorized operation.
+Because of the reasons mentioned in the beginning of this section, you would
+like to avoid loops wherever you can and try to replace it by a vectorized
+operation.
 
-When people commonly speak of `optimizing code for \matlab{}', it will most often be this particular aspect. The topic is huge and this section can merely give the idea of it. If you are stuck with slow loop operations and you have no idea how to make it really quick, take a look at the excellent and comprehensive guide at \cite{Mathworks:2009:CVG}. -- There is almost always a way to vectorize.
+When people commonly speak of `optimizing code for \matlab{}', it will most
+often be this particular aspect. The topic is huge and this section can merely
+give the idea of it. If you are stuck with slow loop operations and you have
+no idea how to make it really quick, take a look at the excellent and
+comprehensive guide at \cite{Mathworks:2009:CVG}. -- There is almost always a
+way to vectorize.
 
-Consider the following example a general scheme of how to remove loops from vectorizable operations.
+Consider the following example a general scheme of how to remove loops from
+vectorizable operations.
 
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -246,7 +314,7 @@ Iterating through the array \lstinline!v! and checking each element individually
 See also \cite{Mathworks:2001:MIM}.
 
 % \begin{remark}
-% Of course, things can get somewhat more difficult to vectorize, for example when the commands within the loop make contain more than just `\lstinline!i!' or `\lstinline!i-1!' as index references like above. There is, however, almost always a way to vectorize. If you don't know further, see \cite{Mathworks:2009:CVG}.
+% Of course, things can get somewhat more difficult to vectorize, for example when the commands within the loop make contain more than just `\lstinline!i!' or `\lstinline!i-1!' as index references like above. There is, however, almost always a way to vectorize. If you do not know further, see \cite{Mathworks:2009:CVG}.
 % \end{remark}
 
 % \begin{example}
@@ -255,9 +323,9 @@ See also \cite{Mathworks:2001:MIM}.
 
 % \subsubsection{Referencing matrix elements}
 % This hint is actually pretty similar to what is stated in the previous paragraph.
-% 
-% One is sometimes confronted with the 
-% 
+%
+% One is sometimes confronted with the
+%
 % \Pointinghand\quad Useful functions: \lstinline!find!
 
 
@@ -336,7 +404,7 @@ A = A / h^2;
 
 % continued below
 \end{lstlisting}
-Creating the tridiagonal matrix $1/h^2\times\diag[-1, 2, -1]$ in dense format. The code is bulky for what it does, and can't use native matrix notation. Execution time: \extime{0.67}.
+Creating the tridiagonal matrix $1/h^2\times\diag[-1, 2, -1]$ in dense format. The code is bulky for what it does, and cannot use native matrix notation. Execution time: \extime{0.67}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -432,7 +500,7 @@ Solving with a number of right hand sides in one go. Execution time: \extime{0.1
 \hfill
 
 
-If, on the other hand, you need to solve the system once to get the next right-hand side (which is often the case with time-dependent differential equations, for example), this approach won't work; you'll indeed have to solve the system in a loop. However, one would still want to use the information from the previous steps; this can be done by first factoring $A$ into a product of a lower triangular matrix $L$ and an upper triangular matrix $U$, and then instead of computing $A^{-1}u^{(k)}$ in each step, computing $U^{-1}L^{-1}u^{(k)}$ (which is a lot cheaper.
+If, on the other hand, you need to solve the system once to get the next right-hand side (which is often the case with time-dependent differential equations, for example), this approach will not work; you will indeed have to solve the system in a loop. However, one would still want to use the information from the previous steps; this can be done by first factoring $A$ into a product of a lower triangular matrix $L$ and an upper triangular matrix $U$, and then instead of computing $A^{-1}u^{(k)}$ in each step, computing $U^{-1}L^{-1}u^{(k)}$ (which is a lot cheaper.
 
 \hfill
 \begin{minipage}[t]{.45\textwidth}

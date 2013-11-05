@@ -1,18 +1,18 @@
-% ================================================================================
+% =============================================================================
 %
 % Copyright (c) 2009--2011, Nico Schlömer
 % All rights reserved.
-% 
+%
 % Redistribution and use in source and binary forms, with or without
 % modification, are permitted provided that the following conditions are
 % met:
-% 
+%
 %     * Redistributions of source code must retain the above copyright
 %       notice, this list of conditions and the following disclaimer.
 %     * Redistributions in binary form must reproduce the above copyright
 %       notice, this list of conditions and the following disclaimer in
 %       the documentation and/or other materials provided with the distribution
-% 
+%
 % THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 % AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 % IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -25,7 +25,7 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 % POSSIBILITY OF SUCH DAMAGE.
 %
-% ================================================================================
+% =============================================================================
 
 % common header for all exercise sheets
 \documentclass[%
@@ -39,6 +39,7 @@ bibliography=totoc
 \setcounter{secnumdepth}{1}
 
 % \usepackage{amsbsy,amsmath,amsthm,amsfonts,amssymb,color,xcolor}
+\usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{graphicx}
 
@@ -46,14 +47,15 @@ bibliography=totoc
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 
-% get the fine points of typography
-\usepackage{microtype}
+% Get the fine points of typography.
+% Leads to bad line breaks in Remark blocks; disable for now.
+%\usepackage{microtype}
 
-\usepackage{math-abbreviations}
+\usepackage{subcaption}
 
 % \titlehead{\includegraphics[width=3cm]{../../logos/logo}}
 % \subject{\matlab{} in numerical analysis}
-\title{Guidelines for writing clean and fast code in \matlab{}\footnote{\matlab{} Central ``File Exchange Pick of the Week'', January 14, 2011 \cite{Shoelson:2011:GMC}}}
+\title{Guidelines for\\writing clean and fast code in~\matlab{}\footnote{\matlab{} Central ``File Exchange Pick of the Week'', January 14, 2011 \cite{Shoelson:2011:GMC}}}
 
 \author{Nico Schl\"omer\thanks{E-mail: \href{mailto:nico.schloemer@gmail.com}{\nolinkurl{nico.schloemer@gmail.com}} The author will be happy about comments and suggestions about the document.}}
 \date{\today}
@@ -74,11 +76,10 @@ captionpos=b,
 abovecaptionskip=2ex
 }
 
-% Minted is newer and more powerful, but harder to use for its dependency on Pygments.
+% Minted is newer and more powerful, but harder to use for its dependency on
+% Pygments.
 %\usepackage{minted}
 %\usemintedstyle{matlab}
-
-\usepackage{subfig}
 
 \usepackage{graphicx}
 
@@ -98,15 +99,12 @@ abovecaptionskip=2ex
 bookmarks,
 colorlinks=false,
 pdftitle={Guidelines for writing clean and fast code in MATLAB(R)},
-pdfauthor={Nico Schl\"omer}
+pdfauthor={Nico Schloemer}
 ]{hyperref}
 
-% get advanced citing capabilities and cite by number
-% \usepackage[numbers]{natbib}
-% \bibliographystyle{plainnat}
 \usepackage[%
-bibtex8=true,
-hyperref=auto
+hyperref=auto,
+backend=biber
 ]{biblatex}
 \bibliography{bibtex/matlab-tipsntricks}
 
@@ -139,7 +137,6 @@ hyperref=auto
 \definecolor{matlabeditorkeyword}{RGB}{0,0,255}
 \definecolor{matlabeditorstring} {RGB}{181,81,243}
 
-
 %\usepackage[boxed]{algorithm2e} % pretty-print pseudo code
 %\restylealgo{boxed}\linesnumbered\dontprintsemicolon
 %\setalcapskip{2ex}
@@ -148,6 +145,6 @@ hyperref=auto
 
 \DeclareMathOperator{\diag}{diag}
 
-%\renewcommand{\norm}[1]{\ensuremath{\left\|#1\right\|}}
+\newcommand{\norm}[1]{\ensuremath{\left\|#1\right\|}}
 % \providecommand{\der}[2]{\frac{\partial #1}{\partial #2}}
 % \providecommand{\dertwo}[2]{\frac{\partial^2 #1}{\partial #2^2}}

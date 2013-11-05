@@ -1,18 +1,18 @@
-% ================================================================================
+% =============================================================================
 %
 % Copyright (c) 2009--2011, Nico Schlömer
 % All rights reserved.
-% 
+%
 % Redistribution and use in source and binary forms, with or without
 % modification, are permitted provided that the following conditions are
 % met:
-% 
+%
 %     * Redistributions of source code must retain the above copyright
 %       notice, this list of conditions and the following disclaimer.
 %     * Redistributions in binary form must reproduce the above copyright
 %       notice, this list of conditions and the following disclaimer in
 %       the documentation and/or other materials provided with the distribution
-% 
+%
 % THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 % AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 % IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -25,18 +25,38 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 % POSSIBILITY OF SUCH DAMAGE.
 %
-% ================================================================================
+% =============================================================================
 \newpage
 \section*{\matlab{} alternatives}
 \addcontentsline{toc}{section}{\matlab{} alternatives}
 
-When writing \matlab{} code, you need to realize that unlike C, Fortran, or Python code, you will always need the \emph{commercial} \matlab{} environment to have it run. Right now, that might not be much of a problem to you as you are at a university or have some other free access to the software, but sometime in the future, this might change.
+When writing \matlab{} code, you need to realize that unlike C, Fortran, or
+Python code, you will always need the \emph{commercial} \matlab{} environment
+to have it run. Right now, that might not be much of a problem to you as you
+are at a university or have some other free access to the software, but
+sometime in the future, this might change.
 
-The current cost for the basic \matlab{} kit, which does not include \emph{any} toolbox nor Simulink, is \EUR{500} for academic institutions; around \EUR{60} for students; \emph{thousands} of Euros for commercial operations. Considering this, there is a not too small chance that you will not be able to use \matlab{} after you quit from university, and that would render all of your own code virtually useless to you.
+The current cost for the basic \matlab{} kit, which does not include
+\emph{any} toolbox nor Simulink, is \EUR{500} for academic institutions;
+around \EUR{60} for students; \emph{thousands} of Euros for commercial
+operations. Considering this, there is a not too small chance that you will
+not be able to use \matlab{} after you quit from university, and that would
+render all of your own code virtually useless to you.
 
-Because of that, free and open source \matlab{} alternatives have emerged, three of which are shortly introduced here. Octave and Scilab try to stick to \matlab{} syntax as closely as possible, resulting in all of the code in this document being legal for the two packages as well.
-When it comes to the specialized toolboxes, however, neither of the alternatives may be able to provide the same capabilities that \matlab{} offers. However, these are mostly functions related to Simulink and the like which are hardly used by beginners anyway.
-Also note none of the alternatives ships with its own text editor (as \matlab{} does), so you are free yo use the editor of your choice (see, for example, \href{http://www.vim.org/}{vim}, \href{http://www.gnu.org/software/emacs/}{emacs}, Kate, \href{http://projects.gnome.org/gedit/}{gedit} for Linux; \href{http://notepad-plus.sourceforge.net/uk/site.htm}{Notepad++}, \href{http://www.crimsoneditor.com/}{Crimson Editor} for Windows).
+Because of that, free and open source \matlab{} alternatives have emerged,
+three of which are shortly introduced here. Octave and Scilab try to stick to
+\matlab{} syntax as closely as possible, resulting in all of the code in this
+document being legal for the two packages as well.  When it comes to the
+specialized toolboxes, however, neither of the alternatives may be able to
+provide the same capabilities that \matlab{} offers. However, these are mostly
+functions related to Simulink and the like which are hardly used by beginners
+anyway.  Also note none of the alternatives ships with its own text editor (as
+\matlab{} does), so you are free yo use the editor of your choice (see, for
+example, \href{http://www.vim.org/}{vim},
+\href{http://www.gnu.org/software/emacs/}{emacs}, Kate,
+\href{http://projects.gnome.org/gedit/}{gedit} for Linux;
+\href{http://notepad-plus.sourceforge.net/uk/site.htm}{Notepad++},
+\href{http://www.crimsoneditor.com/}{Crimson Editor} for Windows).
 
 \subsection{SciPy, Numpy, matplotlib}
 
@@ -45,17 +65,27 @@ Also note none of the alternatives ships with its own text editor (as \matlab{} 
 \includegraphics[width=5cm]{figures/matplotlib.png}
 \end{floatingfigure}
 
-Python is the most modern programming language as of 2011: Amongst the many award the language as received stands the TIOBE Programming Language Award of 2010. It is yearly given to the programming language that has gained the largest market market share during that year.
+Python is the most modern programming language as of 2011: Amongst the many
+award the language as received stands the TIOBE Programming Language Award of
+2010. It is yearly given to the programming language that has gained the
+largest market market share during that year.
 
-Python is used in all kinds of different contexts, and its versatility and ease of use has made it attractive to many. There are tons packages for all sorts of tasks, and the huge community and its open development help the enormous success of Python.
+Python is used in all kinds of different contexts, and its versatility and
+ease of use has made it attractive to many. There are tons packages for all
+sorts of tasks, and the huge community and its open development help the
+enormous success of Python.
 
-In the world of scientific computing, too, Python has already risen to be a major player. This is mostly due to the packages SciPy and Numpy which provide all data structures and algorithms that are used in numerical code. Plotting is most easily handled by matplotlib, a huge library which in many ways excels \matlab{}'s graphical engine.
+In the world of scientific computing, too, Python has already risen to be a
+major player. This is mostly due to the packages SciPy and Numpy which provide
+all data structures and algorithms that are used in numerical code. Plotting
+is most easily handled by matplotlib, a huge library which in many ways excels
+\matlab{}'s graphical engine.
 
-Being a language rather than an application, Python is supported in virtually every operating system.
+Being a language rather than an application, Python is supported in virtually
+every operating system.
 
-The author of this document highly recommends to take a look at Python for your own
-(scientific) programming projects.
-
+The author of this document highly recommends to take a look at Python for
+your own (scientific) programming projects.
 
 
 \subsection{GNU Octave}
@@ -65,15 +95,30 @@ The author of this document highly recommends to take a look at Python for your 
 \includegraphics[width=5cm]{figures/Octave_Sombrero}
 \end{floatingfigure}
 
-GNU Octave is a high-level language, primarily intended for numerical computations. It provides a convenient command line interface for solving linear and nonlinear problems numerically, and for performing other numerical experiments using a language that is mostly compatible with \matlab{}. It may also be used as a batch-oriented language.
+GNU Octave is a high-level language, primarily intended for numerical
+computations. It provides a convenient command line interface for solving
+linear and nonlinear problems numerically, and for performing other numerical
+experiments using a language that is mostly compatible with \matlab{}. It may
+also be used as a batch-oriented language.
 
-Internally, Octave relies on other independent and well-recognized packages such as gnuplot (for plotting) or UMFPACK (for calculating with sparse matrices). In that sense, Octave is extremely well integrated into the free and open source software (FOSS) landscape.
+Internally, Octave relies on other independent and well-recognized packages
+such as gnuplot (for plotting) or UMFPACK (for calculating with sparse
+matrices). In that sense, Octave is extremely well integrated into the free
+and open source software (FOSS) landscape.
 
-Octave has extensive tools for solving common numerical linear algebra problems, finding the roots of nonlinear equations, integrating ordinary functions, manipulating polynomials, and integrating ordinary differential and differential-algebraic equations. It is easily extensible and customizable via user-defined functions written in Octave's own language, or using dynamically loaded modules written in C++, C, Fortran, or other languages.
+Octave has extensive tools for solving common numerical linear algebra
+problems, finding the roots of nonlinear equations, integrating ordinary
+functions, manipulating polynomials, and integrating ordinary differential and
+differential-algebraic equations. It is easily extensible and customizable via
+user-defined functions written in Octave's own language, or using dynamically
+loaded modules written in C++, C, Fortran, or other languages.
 
-GNU Octave is also freely redistributable software. You may redistribute it and/or modify it under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation.
+GNU Octave is also freely redistributable software. You may redistribute it
+and/or modify it under the terms of the GNU General Public License (GPL) as
+published by the Free Software Foundation.
 
-The project if originally GNU/Linux, but versions for MacOS, Windows, Sun Solaris, and OS/2 exist.
+The project if originally GNU/Linux, but versions for MacOS, Windows, Sun
+Solaris, and OS/2 exist.
 
 \subsection{Scilab}
 
@@ -82,14 +127,26 @@ The project if originally GNU/Linux, but versions for MacOS, Windows, Sun Solari
 \includegraphics[width=4cm]{figures/scilab_official_logo}
 \end{floatingfigure}
 
-Scilab is a scientific software package for numerical computations providing a powerful open computing environment for engineering and scientific applications.
+Scilab is a scientific software package for numerical computations providing a
+powerful open computing environment for engineering and scientific
+applications.
 
-Scilab is open source software and originates from the French International Institute for Research in Computer Science and Control (INRIA).
+Scilab is open source software and originates from the French International
+Institute for Research in Computer Science and Control (INRIA).
 
-Since 1994 it has been distributed freely along with the source code via the Internet. It is currently used in educational and industrial environments around the world.
+Since 1994 it has been distributed freely along with the source code via the
+Internet. It is currently used in educational and industrial environments
+around the world.
 
-Scilab is now the responsibility of the Scilab Consortium, launched in May 2003. There are currently 18 members in Scilab Consortium (Phase II).
+Scilab is now the responsibility of the Scilab Consortium, launched in May
+2003. There are currently 18 members in Scilab Consortium (Phase II).
 
-Scilab includes hundreds of mathematical functions with the possibility to add interactively programs from various languages (C, C++, Fortran,\dots). It has sophisticated data structures (including lists, polynomials, rational functions, linear systems\dots), an interpreter and a high level programming language.
+Scilab includes hundreds of mathematical functions with the possibility to add
+interactively programs from various languages (C, C++, Fortran,\dots). It has
+sophisticated data structures (including lists, polynomials, rational
+functions, linear systems\dots), an interpreter and a high level programming
+language.
 
-Scilab works under Windows 9X/2000/XP/Vista, GNU/Linux, and most UNIX systems. Binary versions for these systems are freely available, along with the source code.
+Scilab works under Windows 9X/2000/XP/Vista, GNU/Linux, and most UNIX systems.
+Binary versions for these systems are freely available, along with the source
+code.

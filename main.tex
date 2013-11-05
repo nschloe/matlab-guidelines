@@ -1,18 +1,18 @@
-% ================================================================================
+% =============================================================================
 %
 % Copyright (c) 2009--2011, Nico Schlömer
 % All rights reserved.
-% 
+%
 % Redistribution and use in source and binary forms, with or without
 % modification, are permitted provided that the following conditions are
 % met:
-% 
+%
 %     * Redistributions of source code must retain the above copyright
 %       notice, this list of conditions and the following disclaimer.
 %     * Redistributions in binary form must reproduce the above copyright
 %       notice, this list of conditions and the following disclaimer in
 %       the documentation and/or other materials provided with the distribution
-% 
+%
 % THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 % AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 % IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -25,7 +25,7 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 % POSSIBILITY OF SUCH DAMAGE.
 %
-% ================================================================================
+% =============================================================================
 \input{header}
 
 
@@ -34,26 +34,41 @@
 \maketitle
 
 \begin{abstract}
-This document is aimed at \matlab{} beginners who already know the syntax but feel are not yet quite experienced with it. Its goal is to give a number of hints which enable the reader to write quality \matlab{} programs and to avoid commonly made mistakes.
+This document is aimed at \matlab{} beginners who already know the syntax but
+feel are not yet quite experienced with it. Its goal is to give a number of
+hints which enable the reader to write quality \matlab{} programs and to avoid
+commonly made mistakes.
 
-There are three major independent chapters which may very well be read separately. Also, the individual chapters each split up into one or two handful of chunks of information. In that sense, this document is really a slightly extended list of dos and don'ts.
+There are three major independent chapters which may very well be read
+separately. Also, the individual chapters each split up into one or two
+handful of chunks of information. In that sense, this document is really a
+slightly extended list of dos and don'ts.
 
-Chapter 1 describes some aspects of \emph{clean} code. The impact of a subsection for the cleanliness of the code is indicated by one to five \cleansymbol--symbols, where five \cleansymbol's want to say that following the given suggestion is of great importance for the comprehensibility of the code.
+Chapter 1 describes some aspects of \emph{clean} code. The impact of a
+subsection for the cleanliness of the code is indicated by one to five
+\cleansymbol--symbols, where five \cleansymbol's want to say that following
+the given suggestion is of great importance for the comprehensibility of the
+code.
 
-Chapter 2 describes how to speed up the code and is largely a list of mistakes that beginners may tend to make. This time, the \fastsymbol-symbol represents the amount of speed that you could gain when sticking to the hints given in the respective section.
+Chapter 2 describes how to speed up the code and is largely a list of mistakes
+that beginners may tend to make. This time, the \fastsymbol-symbol represents
+the amount of speed that you could gain when sticking to the hints given in
+the respective section.
 
-This guide is written as part of a basic course in numerical analysis, most examples and codes will hence tend to refer to numerical integration or differential equations. However, almost all aspects are of general nature and will also be of interest to anyone using \matlab{}.
+This guide is written as part of a basic course in numerical analysis, most
+examples and codes will hence tend to refer to numerical integration or
+differential equations. However, almost all aspects are of general nature and
+will also be of interest to anyone using \matlab{}.
 \end{abstract}
 
 \tableofcontents
-
 
 \input{matlab-alternatives.tex}
 \input{clean-code.tex}
 \input{fast-code.tex}
 \input{tipsntricks.tex}
 
-\nocite{
+\nocite{%
 Getreuer:2004:WFM,
 Acklam:2003:MAM,
 Moler:2004:NCM,
