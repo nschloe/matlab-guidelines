@@ -4,6 +4,7 @@
 
 LATEX:=lualatex
 BIBTEX:=biber
+GHOSTSCRIPT:=gs
 
 # ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
 
@@ -16,6 +17,8 @@ default: main
 
 main:
 	@$(LATEX) $(TARGET)
+	@$(GHOSTSCRIPT) -q -dBATCH -dNOPAUSE -dSAFER -dFastWebView -sDEVICE=pdfwrite \
+	 -dPDFSETTINGS=/default -sOutputFile=out.pdf $(TARGET).pdf
 
 bib:
 	@$(BIBTEX) $(TARGET)
