@@ -72,7 +72,12 @@ trying to optimize one should start there.}
 \end{figure}
 
 \begin{remark}
-Besides the graphical interface, there is also a command line version of the profiler that can be used to integrate it into your scripts. The commands to invoke are \lstinline!profile on! for starting the profiler and \lstinline!profile off! for stopping it, followed by various commands to evaluate the gathers statistics. See the \matlab{} help page on \lstinline!profile!.
+Besides the graphical interface, there is also a command line version of the
+profiler that can be used to integrate it into your scripts. The commands to
+invoke are \lstinline!profile on! for starting the profiler and
+\lstinline!profile off! for stopping it, followed by various commands to
+evaluate the gathers statistics. See the \matlab{} help page on
+\lstinline!profile!.
 \end{remark}
 
 
@@ -140,7 +145,9 @@ for i = 1:n
     u(i) = sqrt(i);
 end
 \end{lstlisting}
-The vector \lstinline!u! is growing \lstinline!n! times and it probably must be re-allocated as often. The approximate execution time of this code snippet is \extime{21.20}.
+The vector \lstinline!u! is growing \lstinline!n! times and it probably must be
+re-allocated as often. The approximate execution time of this code snippet is
+\extime{21.20}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -151,12 +158,16 @@ for i = 1:n
     u(i) = sqrt(i);
 end
 \end{lstlisting}
-As maximum size of the vector is known beforehand, one can easily tell \matlab{} to place \lstinline!u! into memory with the appropriate size. The code here merely takes \textbf{\SI{3.8}{\milli\second}} to execute!
+As maximum size of the vector is known beforehand, one can easily tell
+\matlab{} to place \lstinline!u! into memory with the appropriate size. The
+code here merely takes \textbf{\SI{3.8}{\milli\second}} to execute!
 \end{minipage}
 \hfill
 
 \begin{remark}
-The previous code example is actually a little misleading as there is a much quicker way to fill \lstinline!u! with the square roots of consecutive numbers. Can you find the one-liner? A look into the next section could help\dots
+The previous code example is actually a little misleading as there is a much
+quicker way to fill \lstinline!u! with the square roots of consecutive numbers.
+Can you find the one-liner? A look into the next section could help\dots
 \end{remark}
 
 
@@ -191,7 +202,9 @@ for i=1:n
   y(i) = x(i) - sin(x(i))^2;
 end
 \end{lstlisting}
-Computation of $f(x)=x-\sin^2(x)$ on \lstinline!n! points between \lstinline!a! and \lstinline!b!. In this version, each and every single point is being treated explicitly. Execution time: approx. \extime{0.91}.
+Computation of $f(x)=x-\sin^2(x)$ on \lstinline!n! points between \lstinline!a!
+and \lstinline!b!. In this version, each and every single point is being
+treated explicitly. Execution time: approx. \extime{0.91}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -212,13 +225,17 @@ Does the same thing using vector notation. Execution time: approx. \extime{0.12}
 \end{minipage}
 \hfill
 
-The \lstinline!sin()! function in \matlab{} hence takes a vector as argument and acts as of it operated on each element of it. Almost all \matlab{} functions have this capability, so make use of it if you can!
+The \lstinline!sin()! function in \matlab{} hence takes a vector as argument
+and acts as of it operated on each element of it. Almost all \matlab{}
+functions have this capability, so make use of it if you can!
 
 
 \paragraph{Vector indexing and boolean indexing.}\label{sec:logicalIndexing}
-When dealing with vectors or matrices, it may sometimes happen that one has to work only on certain entries of the object, e.g., those with odd index.
+When dealing with vectors or matrices, it may sometimes happen that one has to
+work only on certain entries of the object, e.g., those with odd index.
 
-Consider the following three different possibilties of setting the \emph{odd} entries of a vector \lstinline!v! to $0$.
+Consider the following three different possibilties of setting the \emph{odd}
+entries of a vector \lstinline!v! to $0$.
 
 \hfill
 \begin{minipage}[t]{.29\textwidth}
@@ -244,7 +261,8 @@ n = length(v);
 v(1:2:n) = 0;
 
 \end{lstlisting}
-Vector indexing: Matrices take (positive) integer vectors as arguments (\extime{1.14}).
+Vector indexing: Matrices take (positive) integer vectors as arguments
+(\extime{1.14}).
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.29\textwidth}
@@ -257,15 +275,23 @@ mask(1:2:n) =true;
 v( mask ) = 0;
 
 \end{lstlisting}
-Boolean indexing: Matrices take \emph{boolean} arrays\footnotemark{} with the same shape as \lstinline!v! as arguments (\extime{1.41}).
+Boolean indexing: Matrices take \emph{boolean} arrays\footnotemark{} with the
+same shape as \lstinline!v! as arguments (\extime{1.41}).
 \end{minipage}
 \hfill
-\footnotetext{A mistake that beginners tend to make is to define \lstinline!mask! as an array of integers, such as \lstinline!mask = zeros(n,1);!.}
+\footnotetext{A mistake that beginners tend to make is to define
+\lstinline!mask! as an array of integers, such as \lstinline!mask =
+zeros(n,1);!.}
 
-In this case, where the indices to be worked on are known beforehand, the classical way of looping over the error is the fastest. Vector indexing makes the code shorter, but creates a slight overhead; boolean indexing, by having to create the boolean array \lstinline!mask!, is significantly slower.
+In this case, where the indices to be worked on are known beforehand, the
+classical way of looping over the error is the fastest. Vector indexing makes
+the code shorter, but creates a slight overhead; boolean indexing, by having to
+create the boolean array \lstinline!mask!, is significantly slower.
 
-However, should the criteria upon which action is taken dynamically depend on the content of the vector itself, the situation is different.
-Consider again the three schemes, this time for setting the \lstinline!NaN! entries of a vector \lstinline!v! to $0$.
+However, should the criteria upon which action is taken dynamically depend on
+the content of the vector itself, the situation is different.  Consider again
+the three schemes, this time for setting the \lstinline!NaN! entries of a
+vector \lstinline!v! to $0$.
 
 \hfill
 \begin{minipage}[t]{.29\textwidth}
@@ -308,7 +334,16 @@ Boolean indexing: \extime{0.33}.
 \end{minipage}
 \hfill
 
-Iterating through the array \lstinline!v! and checking each element individually means disregarding the ``MAT'' in \matlab{}. Making use of the \lstinline!find()! function, it is possible to have \lstinline!isnan()! work on the whole vector before setting the desired indices to 0 in one go. Even better than that, doing away with the overhead that \lstinline!find()! creates, is to use the boolean array that \lstinline!isnan()! returns to index \lstinline!v! directly\footnote{Remember: You can combine several \lstinline!mask!s with the logical operators \lstinline!&! (``and'') and \lstinline!|! (``or''). For example, \lstinline!mask = isnan(v) | isinf(v);! is \lstinline!true! wherever \lstinline!v! has a \lstinline!NaN! \emph{or} an \lstinline!Inf!.}.
+Iterating through the array \lstinline!v! and checking each element
+individually means disregarding the ``MAT'' in \matlab{}. Making use of the
+\lstinline!find()! function, it is possible to have \lstinline!isnan()! work on
+the whole vector before setting the desired indices to 0 in one go. Even better
+than that, doing away with the overhead that \lstinline!find()! creates, is to
+use the boolean array that \lstinline!isnan()! returns to index \lstinline!v!
+directly\footnote{Remember: You can combine several \lstinline!mask!s with the
+logical operators \lstinline!&! (``and'') and \lstinline!|! (``or''). For
+example, \lstinline!mask = isnan(v) | isinf(v);! is \lstinline!true! wherever
+\lstinline!v! has a \lstinline!NaN! \emph{or} an \lstinline!Inf!.}.
 
 
 See also \cite{Mathworks:2001:MIM}.
@@ -330,14 +365,27 @@ See also \cite{Mathworks:2001:MIM}.
 
 
 \subsection{Solving a linear equation system -- \cleansymbol\cleansymbol\fastsymbol\fastsymbol\fastsymbol}
-When being confronted with a standard linear equation system of the form $Au=b$, the solution can be written down as $u = A^{-1}b$ if $A$ is regular. It may now be quite seductive to translate this into \lstinline!u = inv(A)*b! in \matlab{} notation. Though this step will certainly yield the correct solution (neglecting round-off errors, which admittedly can be quite large in certain cases), it would take quite a long time to execute. The reason for this is the fact that the computer actually does more work then required. What you tell \matlab{} to do here is to
+When being confronted with a standard linear equation system of the form
+$Au=b$, the solution can be written down as $u = A^{-1}b$ if $A$ is regular. It
+may now be quite seductive to translate this into \lstinline!u = inv(A)*b! in
+\matlab{} notation. Though this step will certainly yield the correct solution
+(neglecting round-off errors, which admittedly can be quite large in certain
+cases), it would take quite a long time to execute. The reason for this is the
+fact that the computer actually does more work then required. What you tell
+\matlab{} to do here is to
 \begin{enumerate}
 \item explicitly calculate the inverse of \lstinline!A!, store it in a temporary matrix, and then
 \item multiply the this matrix with \lstinline!u!.
 \end{enumerate}
-However, one is most often not interested in the explicit form of $A^{-1}$, but only the final result $A^{-1}b$. The proper way out is \matlab{}'s \lstinline!\! (backslash) operator (or equivalently \lstinline!mldivide()!) which exactly serves the purpose of solving an equation system with Gau{\ss}ian elimination.
+However, one is most often not interested in the explicit form of $A^{-1}$, but
+only the final result $A^{-1}b$. The proper way out is \matlab{}'s
+\lstinline!\! (backslash) operator (or equivalently \lstinline!mldivide()!)
+which exactly serves the purpose of solving an equation system with Gau{\ss}ian
+elimination.
 
-% While computing a full inverse takes $O(n^4)$ operations (with $n$ being the dimension of the matrix), solving the equation system is as expensive as $O(n^3)$, so you definitely want to go with it.
+% While computing a full inverse takes $O(n^4)$ operations (with $n$ being the
+% dimension of the matrix), solving the equation system is as expensive as
+% $O(n^3)$, so you definitely want to go with it.
 
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -348,7 +396,8 @@ b = rand(n,1);
 
 u = inv(A)*b;
 \end{lstlisting}
-Solving the equation system with an explicit inverse. Execution time: approx. \extime{2.02}.
+Solving the equation system with an explicit inverse. Execution time: approx.
+\extime{2.02}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -363,23 +412,42 @@ Solving the equation system with the \lstinline!\! operator. Execution time: app
 \end{minipage}
 \hfill
 
-% The speed gain is actually not as ground-breaking as the order of magnitude points to; this suggests that \matlab{} actually has some build-in logic that works around this user's mistake. Still, using \lstinline!inv()! for solving an equation system in \matlab{} is considered a deadly sin in \matlab{} and should under all circumstances be avoided.
+% The speed gain is actually not as ground-breaking as the order of magnitude
+% points to; this suggests that \matlab{} actually has some build-in logic that
+% works around this user's mistake. Still, using \lstinline!inv()! for solving
+% an equation system in \matlab{} is considered a deadly sin in \matlab{} and
+% should under all circumstances be avoided.
 
 
 \subsection{Dense and sparse matrices -- \fastsymbol\fastsymbol\fastsymbol\fastsymbol\fastsymbol}
 
-Most discretizations of particular problems yield $N\times N$-matrices which only have a small number of non-zero elements (proportional to $N$). These are called sparse matrices, and as they appear so very often, there is plenty of literature describing how to make use of that structure.
+Most discretizations of particular problems yield $N\times N$-matrices which
+only have a small number of non-zero elements (proportional to $N$). These are
+called sparse matrices, and as they appear so very often, there is plenty of
+literature describing how to make use of that structure.
 
 In particular, one can
 \begin{itemize}
-\item cut down the amount of memory used to store the matrix. Of course, instead of storing all the $0$'s, one would rather store the value and indices of the non-zero elements in the matrix. There are different ways of doing so. \matlab{} internally uses the condensed-column format, and exposes the matrix to the user in indexed format.
+\item cut down the amount of memory used to store the matrix. Of course,
+  instead of storing all the $0$'s, one would rather store the value and
+  indices of the non-zero elements in the matrix. There are different ways of
+  doing so. \matlab{} internally uses the condensed-column format, and exposes
+  the matrix to the user in indexed format.
 
-\item optimize algorithms for the use with sparse matrices. As a matter of fact, most basic numerical operations (such as Gau{\ss}ian elimination, eigenvalue methods and so forth) can be reformulated for sparse matrices and save an enormous amount of computational time.
+\item optimize algorithms for the use with sparse matrices. As a matter of
+  fact, most basic numerical operations (such as Gau{\ss}ian elimination,
+  eigenvalue methods and so forth) can be reformulated for sparse matrices and
+  save an enormous amount of computational time.
 \end{itemize}
 
-% For these reasons, it is highly recommended to allocate matrices as sparse when they really are. There are a couple of functions which assist building up a sparse matrix, most notably \lstinline!sparse!, \lstinline!spdiags!, and \lstinline!speye!.
+% For these reasons, it is highly recommended to allocate matrices as sparse
+% when they really are. There are a couple of functions which assist building
+% up a sparse matrix, most notably \lstinline!sparse!, \lstinline!spdiags!, and
+% \lstinline!speye!.
 
-Of course, operations which only involve sparse matrices will also return a sparse matrix (such as matrix--matrix multiplication \lstinline!*!, \lstinline!transpose!, \lstinline!kron!, and so forth).
+Of course, operations which only involve sparse matrices will also return a
+sparse matrix (such as matrix--matrix multiplication \lstinline!*!,
+\lstinline!transpose!, \lstinline!kron!, and so forth).
 
 
 
@@ -404,7 +472,9 @@ A = A / h^2;
 
 % continued below
 \end{lstlisting}
-Creating the tridiagonal matrix $1/h^2\times\diag[-1, 2, -1]$ in dense format. The code is bulky for what it does, and cannot use native matrix notation. Execution time: \extime{0.67}.
+Creating the tridiagonal matrix $1/h^2\times\diag[-1, 2, -1]$ in dense format.
+The code is bulky for what it does, and cannot use native matrix notation.
+Execution time: \extime{0.67}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -427,7 +497,9 @@ A = A / h^2;
 
 % continued below
 \end{lstlisting}
-The three-line equivalent using the sparse matrix format. The code is not only shorter, easier to read, but also saves gigantic amounts of memory. Execution time: \textbf{\SI{5.4}{\milli\second}}!
+The three-line equivalent using the sparse matrix format. The code is not only
+shorter, easier to read, but also saves gigantic amounts of memory. Execution
+time: \textbf{\SI{5.4}{\milli\second}}!
 \end{minipage}
 \hfill
 
@@ -440,7 +512,8 @@ The three-line equivalent using the sparse matrix format. The code is not only s
 b = ones(n,1);
 u = A\b;
 \end{lstlisting}
-Gau{\ss}ian elimination with a tridiagonal matrix in dense format. Execution time: \extime{55.06}.
+Gau{\ss}ian elimination with a tridiagonal matrix in dense format. Execution
+time: \extime{55.06}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -463,7 +536,10 @@ The same syntax, with \lstinline!A! being sparse. Execution time: \textbf{\SI{0.
 
 \subsection{Repeated solution of an equation system with the same matrix -- \fastsymbol\fastsymbol\fastsymbol\fastsymbol\fastsymbol}
 
-It might happen sometimes that you need to solve an equation system a number of times with the same matrix but different right-hand sides. When all the right hand sides are immediately available, this can be achieved with with one ordinary `\lstinline!\!' operation.
+It might happen sometimes that you need to solve an equation system a number of
+times with the same matrix but different right-hand sides. When all the right
+hand sides are immediately available, this can be achieved with with one
+ordinary `\lstinline!\!' operation.
 
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -479,7 +555,8 @@ for i=1:k
     u(:,k) = A \ B(:,k);
 end
 \end{lstlisting}
-Consecutively solving with a couple of right-hand sides. Execution time: \extime{5.64}.
+Consecutively solving with a couple of right-hand sides. Execution time:
+\extime{5.64}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -495,12 +572,20 @@ B = rand(n,k);
 u = A \ B;
 
 \end{lstlisting}
-Solving with a number of right hand sides in one go. Execution time: \extime{0.13}.
+Solving with a number of right hand sides in one go. Execution time:
+\extime{0.13}.
 \end{minipage}
 \hfill
 
 
-If, on the other hand, you need to solve the system once to get the next right-hand side (which is often the case with time-dependent differential equations, for example), this approach will not work; you will indeed have to solve the system in a loop. However, one would still want to use the information from the previous steps; this can be done by first factoring $A$ into a product of a lower triangular matrix $L$ and an upper triangular matrix $U$, and then instead of computing $A^{-1}u^{(k)}$ in each step, computing $U^{-1}L^{-1}u^{(k)}$ (which is a lot cheaper.
+If, on the other hand, you need to solve the system once to get the next
+right-hand side (which is often the case with time-dependent differential
+equations, for example), this approach will not work; you will indeed have to
+solve the system in a loop. However, one would still want to use the
+information from the previous steps; this can be done by first factoring $A$
+into a product of a lower triangular matrix $L$ and an upper triangular matrix
+$U$, and then instead of computing $A^{-1}u^{(k)}$ in each step, computing
+$U^{-1}L^{-1}u^{(k)}$ (which is a lot cheaper.
 
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -516,7 +601,8 @@ for i = 1:k
   u = A\u;
 end
 \end{lstlisting}
-Computing $u = A^{-k}u_0$ by solving the equation systems in the ordinary way. Execution time: \extime{38.94}.
+Computing $u = A^{-k}u_0$ by solving the equation systems in the ordinary way.
+Execution time: \extime{38.94}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -542,11 +628,26 @@ For many matrices $A$ in the above example, the final result will be heavily cor
 
 
 \paragraph{Factorizing sparse matrices.}
-When $LU$- or Cholesky-factorizing a \emph{sparse matrix}, the factor(s) are in general not sparse anymore and can demand quite an amount of space in memory to the point where no computer can cope with that anymore. The phenomenon of having non-zero entries in the $LU$- or Cholesky-factors where the orginal matrix had zeros is called \emph{fill-in} and has attracted a lot of attention in the past 50 years. As a matter of fact, the success of iterative methods for solving linear equation systems is largely thanks to this drawback.
+When $LU$- or Cholesky-factorizing a \emph{sparse matrix}, the factor(s) are in
+general not sparse anymore and can demand quite an amount of space in memory to
+the point where no computer can cope with that anymore. The phenomenon of
+having non-zero entries in the $LU$- or Cholesky-factors where the orginal
+matrix had zeros is called \emph{fill-in} and has attracted a lot of attention
+in the past 50 years. As a matter of fact, the success of iterative methods for
+solving linear equation systems is largely thanks to this drawback.
 
-Beyond using an iterative method to solve the system, the most popular way to cope with fill-in is to try to re-order the matrix elements in such a way that the new matrix induces less fill-in. Examples of re-ordering are \emph{Reverse Cuthill-McKee} and \emph{Approximate Minimun Degree}. Both are implemented in \matlab{} as \lstinline!colrcm()! and \lstinline!colamd()!, respectively (with versions \lstinline!symrcm()! and \lstinline!symamd()! for symmetric matrices).
+Beyond using an iterative method to solve the system, the most popular way to
+cope with fill-in is to try to re-order the matrix elements in such a way that
+the new matrix induces less fill-in. Examples of re-ordering are \emph{Reverse
+Cuthill-McKee} and \emph{Approximate Minimun Degree}. Both are implemented in
+\matlab{} as \lstinline!colrcm()! and \lstinline!colamd()!, respectively (with
+versions \lstinline!symrcm()! and \lstinline!symamd()! for symmetric matrices).
 
-One can also leave all the fine-tuning to \matlab{} by executing \lstinline!lu()! for sparse matrices with more output arguments; this will return a factorization for the permuted and row-scaled  matrix $PR^{-1}AQ = LU$ (see \matlab{}'s help pages and example below) to reduce fill-in and increase the stability of the algorithm.
+One can also leave all the fine-tuning to \matlab{} by executing
+\lstinline!lu()! for sparse matrices with more output arguments; this will
+return a factorization for the permuted and row-scaled  matrix $PR^{-1}AQ = LU$
+(see \matlab{}'s help pages and example below) to reduce fill-in and increase
+the stability of the algorithm.
 
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -584,8 +685,11 @@ for i = 1:k
   u = Q*( U\(L\(P*(R\u))) );
 end
 \end{lstlisting}
-$LU$-factoring with permutation and row-scaling. This version can use less memory, execute faster, and provide more stability than the ordinary $LU$-factorization. Execution time: \extime{0.07}.
+$LU$-factoring with permutation and row-scaling. This version can use less
+memory, execute faster, and provide more stability than the ordinary
+$LU$-factorization. Execution time: \extime{0.07}.
 
-This factorization is implicitly applied by \matlab{} when using the `\lstinline!\!'-operator for solving a sparse system of equations \emph{once}.
+This factorization is implicitly applied by \matlab{} when using the
+`\lstinline!\!'-operator for solving a sparse system of equations \emph{once}.
 \end{minipage}
 \hfill

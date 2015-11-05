@@ -83,30 +83,22 @@ Doing so, you can avoid a cluttered mess of dozens of M-files in your program
 folder.
 
 \begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen},float,label={listing:multiple-functions},caption={One source containing three functions: Useful when \lstinline!helperFun1! and \lstinline!helperFun2! are only needed by \lstinline!topFun!.}]
-% ===========================================================
 % callable from outside:
 function topFun
   % [...]
   % calls helperFun1 and helperFun2
   % [...]
 end
-% ===========================================================
 
-
-% ===========================================================
 % only visible to all functions in this file:
 function helperFun1
   % [...]
 end
-% ===========================================================
 
-
-% ===========================================================
 % only visible to all functions in this file:
 function helperFun2
   % [...]
 end
-% ===========================================================
 \end{lstlisting}
 
 
@@ -130,29 +122,21 @@ visible.
 \begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
 % [...]
 
-% =========================
 function fun1
   % call helpFun1 here
 end
-% =========================
 
-% =========================
 function fun2
   % call helpFun2 here
 end
-% =========================
 
-% =========================
 function helpFun1
    % [...]
 end
-% =========================
 
-% =========================
 function helpFun2
    % [...]
 end
-% =========================
 
 % [...]
 \end{lstlisting}
@@ -163,29 +147,21 @@ The routines \lstinline!fun1!, \lstinline!fun2!, \lstinline!helpFun1!, and \lsti
 \begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
 % [...]
 
-% =========================
 function fun1
   % call helpFun here
 
-  % -----------------------
   function helpFun
      % [...]
   end
-  % -----------------------
 end
-% =========================
 
-% =========================
 function fun2
   % call helpFun here
 
-  % -----------------------
   function helpFun
      % [...]
   end
-  % -----------------------
 end
-% =========================
 
 % [...]
 \end{lstlisting}
@@ -252,10 +228,11 @@ Variable name                                                 & Usual purpose\\\
 \paragraph{Short variable names.}
 Short, non-descriptive variable names are quite common in mathematical
 computing as the variable names in the corresponding (pen and paper)
-calculations are hardly ever longer then one character either (see table~\ref{table:typical-variable-usage}). To be able to distinguish between vector
-and matrix entities, it is common practice in programming as well as
-mathematics to denote matrices by upper-case, vectors and scalars by
-lower-case characters.
+calculations are hardly ever longer then one character either (see
+table~\ref{table:typical-variable-usage}). To be able to distinguish between
+vector and matrix entities, it is common practice in programming as well as
+mathematics to denote matrices by upper-case, vectors and scalars by lower-case
+characters.
 
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -287,13 +264,23 @@ case, such as
 \begin{lstlisting}
 linearity, distanceToCircle, figureLabel.
 \end{lstlisting}
-Alternatively, one could use the underscore to separate parts of a compound variable name:
+Alternatively, one could use the underscore to separate parts of a compound
+variable name:
 \begin{lstlisting}
 linearity, distance_to_circle, figure_label.
 \end{lstlisting}
-This technique, although readable, is not commonly used for variable names in other languages. Also, some feel the underscore character is not quite easily typable on the keyboard.
+This convenction is sometimes called \emph{snake case} and used, for example,
+in the GNU C++ standard libraries.
 
-When still using the underscore notation, watch out for variable names in \matlab{}'s plots: its \TeX-interpreter will treat the underscore as a switch to subscript and a variable name such as \lstinline!distance_to_circle! will read \lstinline!distance!$_{\text{\lstinline!t!}}$\lstinline!o!$_{\text{\lstinline!c!}}$\lstinline!ircle! in the plot.
+% Also, some feel the underscore character is not quite easily
+% typable on the keyboard.
+
+When using the snake case notation, watch out for variable names in
+\matlab{}'s plots: its \TeX-interpreter will treat the underscore as a switch
+to subscript and a variable name such as \lstinline!distance_to_circle! will
+read
+\lstinline!distance!$_{\text{\lstinline!t!}}$\lstinline!o!$_{\text{\lstinline!c!}}$\lstinline!ircle!
+in the plot.
 
 \begin{remark}
 Using the hyphen `\lstinline!-!' as a separator cannot be considered:
@@ -352,18 +339,21 @@ No visual distinction between the loop levels makes it hard to recognize where t
 \begin{minipage}[t]{.45\textwidth}
 \begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen}]
 for i=1:n
-    for j=1:n
-        if A(i,j)<0
-            A(i,j) = 0;
-        end
+  for j=1:n
+    if A(i,j)<0
+      A(i,j) = 0;
     end
+  end
 end
 \end{lstlisting}
 With indentation, the code looks a lot clearer.\footnotemark[\value{footnote}]
 \end{minipage}
 \hfill
 
-\footnotetext{What the code does is replacing all negative entries of an \lstinline!n!$\times$\lstinline!n!-matrix by \lstinline!0!. There is, however, a much better (shorter, faster) way to achieve this: \lstinline!A( A<0 ) = 0;! (see page \pageref{sec:logicalIndexing}).}
+\footnotetext{What the code does is replacing all negative entries of an
+\lstinline!n!$\times$\lstinline!n!-matrix by \lstinline!0!. There is, however,
+a much better (shorter, faster) way to achieve this: \lstinline!A( A<0 ) = 0;!
+(see page \pageref{sec:logicalIndexing}).}
 
 
 
@@ -379,7 +369,7 @@ single line with one million characters will potentially not be very readable.
 But, how many characters can you fit onto a single line without obscuring its
 content? This is certainly debatable, but commonly this value sits somewhere
 between 70 and 80; \matlab{}'s own text editor suggests 75 characters per
-line. This way, one makes also sure that it is not necessary to have a 22"
+line. This way, one makes also sure that it is not necessary to have a
 widescreen monitor to be able to display the code without artificial line
 breaks or horizontal scrolling in the editor.
 
@@ -421,7 +411,8 @@ a = alpha*(u+v)+beta*...
 sin(p'*q)-t...
 *circleArea(10);
 \end{lstlisting}
-Unsemantic line breaks decrease the readability. Neither the shape of the matrix, nor the number of summands in the second expression is clear.
+Unsemantic line breaks decrease the readability. Neither the shape of the
+matrix, nor the number of summands in the second expression is clear.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{.45\textwidth}
@@ -519,7 +510,8 @@ isInSquare = ...
 if ~isInCircle && isInSquare
 % [...]
 \end{lstlisting}
-The meaning of the variable \lstinline!radius! is can be instantly seen and its value easily altered.
+The meaning of the variable \lstinline!radius! is can be instantly seen and its
+value easily altered.
 \end{minipage}
 \hfill
 
@@ -527,58 +519,54 @@ The meaning of the variable \lstinline!radius! is can be instantly seen and its 
 \subsection{Comments  -- \cleansymbol\cleansymbol\cleansymbol\cleansymbol\cleansymbol}
 
 The most valuable character for clean \matlab{} code is `\lstinline!%!',
-the comment character. All tokens after it on the same line are ignored, and the space can be used to explain the source code in English (or your tribal language, if you prefer).
+the comment character. All tokens after it on the same line are ignored, and
+the space can be used to explain the source code in English (or your tribal
+language, if you prefer).
 
 \paragraph{Documentation -- \cleansymbol\cleansymbol\cleansymbol\cleansymbol\cleansymbol}
-There should be a big fat neon-red blinking frame around this paragraph, as documentation is \emph{the} single most important aspect about clean and readable code. Unfortunately, it also takes the longest to write which is why you will find undocumented source code everywhere you go.
+There should be a big fat neon-red blinking frame around this paragraph, as
+documentation is \emph{the} single most important aspect about clean and
+readable code. Unfortunately, it also takes the longest to write which is why
+you will find undocumented source code everywhere you go.
 
 Look at listing~\ref{listing:fences} for a suggestion for quick and clear
 documentation, and see if you can do it yourself!
 
 
 \paragraph{Structuring elements -- \cleansymbol\cleansymbol\cleansymbol}
-It is always useful to have the beginning and the end of the function not only indicated by the respective keywords, but also by something more visible. Consider building `fences' with commented `\lstinline!#!', `\lstinline!=!', or `\lstinline!-!' characters, to visually separate distinct parts of the code. This comes in very handy when there are multiple functions in one source file, for example, or when there is a \lstinline!for!-loop that stretches over that many lines that you cannot easily find the corresponding \lstinline!end! anymore.
+It is always useful to have the beginning and the end of the function not only
+indicated by the respective keywords, but also by something more visible.
+Consider building `fences' with commented `\lstinline!#!', `\lstinline!=!', or
+`\lstinline!-!' characters, to visually separate distinct parts of the code.
+This comes in very handy when there are multiple functions in one source file,
+for example, or when there is a \lstinline!for!-loop that stretches over that
+many lines that you cannot easily find the corresponding \lstinline!end!
+anymore.
 
 For a (slightly exaggerated) example, see listing~\ref{listing:fences}.
 
 \begin{lstlisting}[float,label={listing:fences},caption={Function in which `\lstinline!-!'-fences are used to emphasize the functionally separate sections of the code.}]
-% ===========================================================
-% *** FUNCTION timeIteration
-% ***
-% *** Takes a starting vector u and performs n time steps.
-% ***
-% ===========================================================
 function out = timeIteration( u, n )
+  % Takes a starting vector u and performs n time steps.
+  %
 
-  % ---------------------------------------------------------
   % set the parameters
   tau   = 1.0;
   kappa = 1.0;
   out   = u;
-  % ---------------------------------------------------------
 
-
-  % ---------------------------------------------------------
   % do the iteration
   for k = 1:n
 
       [out, flag] = proceedStep( out, tau, kappa );
 
-      % - - - - - - - - - - - - - - - - - - - - - - - - - -
       % warn if something went wrong
       if ~flag
           warning( [ 'timeIteration:errorFlag', ...
                      'proceedStep returns flag ', flag ] );
       end
-      % - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   end
-  % ---------------------------------------------------------
-
 end
-% ===========================================================
-% *** END FUNCTION timeIteration
-% ===========================================================
 \end{lstlisting}
 
 
@@ -762,13 +750,9 @@ The unexpected case is intercepted.
 
 
 \begin{lstlisting}[framerule=2pt,rulecolor=\color{goodgreen},float,caption={The same code as in listing~\ref{listing:prime1}, with rules of style applied. It should now be somewhat easier to maintain and improve the code. Do you have ideas how to speed it up?}]
-% ======================================================
-% *** FUNCTION prime
-% ***
-% *** Returns all prime numbers below or equal to N.
-% ***
-% ======================================================
 function p = prime( N )
+  % Returns all prime numbers below or equal to N.
+  %
 
   for i = 2:N
       % checks if a number is prime
@@ -787,7 +771,4 @@ function p = prime( N )
   end
 
 end
-% ======================================================
-% *** END FUNCTION prime
-% ======================================================
 \end{lstlisting}

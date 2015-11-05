@@ -66,15 +66,9 @@ float,
 label={listing:simpson1},
 caption={Implementation of Simpson's rule for numerically integrating a function (here: \lstinline!sin!) between \lstinline!a! and \lstinline!b!. Note the usage of the vector notation to speed up the function. Also note that \lstinline!sin! is hardcoded into the routine, and needs to be changed each time we want to change the function. In case one is interested in calculating the integral of $f(x) = \exp(\sin(\frac{1}{x})) / \tan(\sqrt{1-x^4})$, this could get quite messy.},
 rulecolor=\color{badred}]
-% ===================================================
-% *** FUNCTION simpson
-% ***
-% *** Implements Simpson's rule for integrating
-% *** the sine function over [a,b] with granularity
-% *** h.
-% ***
-% ===================================================
 function int = simpson( a, b, h )
+  % Implements Simpson's rule for integrating the
+  % sine function over [a,b] with granularity h.
 
   x = a:h:b;
 
@@ -86,9 +80,6 @@ function int = simpson( a, b, h )
                     +   sin(x(2:n  )) ) );
 
 end
-% ===================================================
-% *** END FUNCTION simpson
-% ===================================================
 \end{lstlisting}
 
 \subsection{Functions as arguments -- \cleansymbol\cleansymbol\cleansymbol}
@@ -109,14 +100,9 @@ caption={Simpson's rule with function handles. Note that the syntax for function
 label={listing:simpson2},
 framerule=2pt,
 rulecolor=\color{goodgreen}]
-% ===================================================
-% *** FUNCTION simpson
-% ***
-% *** Implements Simpson's rule for integrating
-% *** a function f over [a,b] with granularity h.
-% ***
-% ===================================================
 function int = simpson( f, a, b, h )
+  % Implements Simpson's rule for integrating a
+  % function f over [a,b] with granularity h.
 
   x   = a:h:b;
   mid = (x(1:n-1) + x(2:n)) / 2;
@@ -128,9 +114,6 @@ function int = simpson( f, a, b, h )
                     +   f(x(2:n  )) ) );
 
 end
-% ===================================================
-% *** END FUNCTION simpson
-% ===================================================
 \end{lstlisting}
 
 \hfill
@@ -185,14 +168,9 @@ framerule=1pt,
 caption={Function that implements matrix--vector multiplication with $1/h^2 \times \diag(-1,2,-1)$. Note that the function consumes (almost) no more memory then \lstinline!u! already required.},
 label={listing:Amultiply}
 ]
-% ===================================================
-% *** FUNCTION A_multiply
-% ***
-% *** Implements matrix--vector multiplication with
-% *** diag[-1,2,-1]/h^2  .
-% ***
-% ===================================================
 function out = A_multiply( u )
+  % Implements matrix--vector multiplication with
+  % diag[-1,2,-1]/h^2  .
 
   n   = length( u );
   u   = [0; u; 0];
@@ -201,9 +179,6 @@ function out = A_multiply( u )
   out = out * (n+1)^2;
 
 end
-% ===================================================
-% *** END FUNCTION A_multiply
-% ===================================================
 \end{lstlisting}
 
 
@@ -303,13 +278,8 @@ framerule=1pt,
 caption={Function that implements the operator $I_H^h$ from the example (see figure~\ref{subfig:coarse-fine}). Writing down the structure of the corresponding matrix would be somewhat complicated, and even more so when moving to two- or three-dimensional grids. Note also how matrix notation has been exploited.},
 label={listing:IHh}
 ]
-% ===========================================================
-% *** FUNCTION coarse2fine
-% ***
-% *** Transforms values from a coarse grid to a fine grid.
-% ***
-% ===========================================================
 function uFine = coarse2fine( uCoarse )
+  % Transforms values from a coarse grid to a fine grid.
 
   N = length(uCoarse);
   n = 2*N - 1;
@@ -320,9 +290,6 @@ function uFine = coarse2fine( uCoarse )
   uFine(2:2:n) = midValues;
 
 end
-% ===========================================================
-% *** END FUNCTION coarse2fine
-% ===========================================================
 \end{lstlisting}
 
 
