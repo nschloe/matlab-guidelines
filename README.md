@@ -10,3 +10,7 @@ This guide is written as part of a basic course in numerical analysis, most exam
 codes will hence tend to refer to numerical integration or differential equations.
 However, almost all aspects are of general nature and will also be of interest to anyone
 using MATLAB(R).
+
+
+#### Further reading
+ * [Pascal Getreuer, Writing Fast MATLAB Code](https://www.mathworks.com/matlabcentral/fileexchange/5685-writing-fast-matlab-code)
