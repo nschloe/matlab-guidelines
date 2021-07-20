@@ -116,14 +116,13 @@ layout except the German one.} elimination), and so on.
 
 \subsubsection{Matrix pre-allocation -- \fastsymbol\fastsymbol\fastsymbol\fastsymbol\fastsymbol}
 
-When a matrix appears in \matlab{} code for the first time, its contents need
-to be stored in system memory (RAM). This process is called allocation. To do
-this, \matlab{} needs to find a place in memory (a range of \emph{addresses})
-which is large enough to hold the matrix and assign this place to the matrix.
-This process is called allocation. Note that typically, matrices are stored
-continuously in memory, and not split up to here and there. This way, the
-processor can quickly access its entries without having to look around in the
-system memory.
+When a matrix appears in \matlab{} code for the first time, its contents need to be
+stored in system memory (RAM). To do this, \matlab{} needs to find a place in memory (a
+range of \emph{addresses}) which is large enough to hold the matrix and assign this
+place to the matrix. This process is called allocation. Note that, typically, matrices
+are stored continuously in memory, and not split up to here and there. This way, the
+processor can quickly access its entries without having to look around in the system
+memory.
 
 %  In some higher programming languages, the user needs to explicitly demand space allocation for an object, while in others do this automatically.
 
@@ -344,7 +343,6 @@ directly\footnote{Remember: You can combine several \lstinline!mask!s with the
 logical operators \lstinline!&! (``and'') and \lstinline!|! (``or''). For
 example, \lstinline!mask = isnan(v) | isinf(v);! is \lstinline!true! wherever
 \lstinline!v! has a \lstinline!NaN! \emph{or} an \lstinline!Inf!.}.
-
 
 See also \cite{Mathworks:2001:MIM}.
 
