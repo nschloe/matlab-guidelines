@@ -205,7 +205,7 @@ functions have this capability, so make use of it if you can!
 When dealing with vectors or matrices, it may sometimes happen that one has to
 work only on certain entries of the object, e.g., those with odd index.
 
-Consider the following three different possibilties of setting the \emph{odd}
+Consider the following three different possibilities of setting the \emph{odd}
 entries of a vector \lstinline!v! to $0$.
 
 \hfill
@@ -383,7 +383,7 @@ Solving the equation system with the \lstinline!\! operator. Execution time: app
 \hfill
 
 % The speed gain is actually not as ground-breaking as the order of magnitude
-% points to; this suggests that \matlab{} actually has some build-in logic that
+% points to; this suggests that \matlab{} actually has some built-in logic that
 % works around this user's mistake. Still, using \lstinline!inv()! for solving
 % an equation system in \matlab{} is considered a deadly sin in \matlab{} and
 % should under all circumstances be avoided.
@@ -601,7 +601,7 @@ For many matrices $A$ in the above example, the final result will be heavily cor
 When $LU$- or Cholesky-factorizing a \emph{sparse matrix}, the factor(s) are in
 general not sparse anymore and can demand quite an amount of space in memory to
 the point where no computer can cope with that anymore. The phenomenon of
-having non-zero entries in the $LU$- or Cholesky-factors where the orginal
+having non-zero entries in the $LU$- or Cholesky-factors where the original
 matrix had zeros is called \emph{fill-in} and has attracted a lot of attention
 in the past 50 years. As a matter of fact, the success of iterative methods for
 solving linear equation systems is largely thanks to this drawback.
@@ -609,7 +609,7 @@ solving linear equation systems is largely thanks to this drawback.
 Beyond using an iterative method to solve the system, the most popular way to
 cope with fill-in is to try to re-order the matrix elements in such a way that
 the new matrix induces less fill-in. Examples of re-ordering are \emph{Reverse
-Cuthill-McKee} and \emph{Approximate Minimun Degree}. Both are implemented in
+Cuthill-McKee} and \emph{Approximate Minimum Degree}. Both are implemented in
 \matlab{} as \lstinline!colrcm()! and \lstinline!colamd()!, respectively (with
 versions \lstinline!symrcm()! and \lstinline!symamd()! for symmetric matrices).
 
