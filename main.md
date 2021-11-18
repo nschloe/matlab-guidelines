@@ -160,7 +160,9 @@ mod(l11,ll1)>1&&mod(l11,ll1)<floor(l11/ll1),...
 lll(ll1,l11+1,l1l+~mod(floor(l11/ll1),mod(l11,ll1)) );
 elseif l11<ll1*ll1;lll(ll1,l11+1,l1l);end;end
 ```
-\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred},float=b,label={listing:prime1},caption={Perfectly legal MATLAB code, with all rules of style ignored. Can you guess what this function does?}]
+<caption>
+Perfectly legal MATLAB code, with all rules of style ignored. Can you guess what this function does?
+</caption>
 
 #### Multiple functions per file - 🚿🚿🚿
 It is a common and false prejudice that MATLAB cannot cope with several
