@@ -509,9 +509,6 @@ rather difficult to identify those `1`s which actually refer to it.
 ```matlab
 x = 2; y = 0;
 
-
-
-
 pointsDistance = ...
   norm( [x,y]-[1,1] );
 
@@ -578,9 +575,6 @@ the corresponding `end` anymore.
 
 For a (slightly exaggerated) example, see listing~\ref{listing:fences}.
 
-<caption>
-Function in which `-`-fences are used to emphasize the functionally separate sections of the code.
-</caption>
 ```matlab
 function out = timeIteration( u, n )
   % Takes a starting vector u and performs n time steps.
@@ -604,6 +598,9 @@ function out = timeIteration( u, n )
   end
 end
 ```
+<caption>
+Function in which `-`-fences are used to emphasize the functionally separate sections of the code.
+</caption>
 
 
 ### Usage of brackets - 🚿🚿
@@ -680,17 +677,10 @@ having issued its message.
 tol = 1e-15;
 rho = norm(r);
 
-
-
 while abs(rho)>tol
-
   r   = oneStep( r );
   rho = norm( r );
 end
-
-
-
-
 
 % process solution
 ```
@@ -739,9 +729,6 @@ switch pet
     feedCarrots();
   case 'Hector'
     feedSausages();
-
-
-
 end
 ```
 <caption>
