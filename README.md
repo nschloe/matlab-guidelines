@@ -156,6 +156,7 @@ mod(l11,ll1)>1&&mod(l11,ll1)<floor(l11/ll1),...
 lll(ll1,l11+1,l1l+~mod(floor(l11/ll1),mod(l11,ll1)) );
 elseif l11<ll1*ll1;lll(ll1,l11+1,l1l);end;end
 ```
+
 Perfectly legal MATLAB code, with all rules of style ignored. Can you guess what this function does?
 
 #### Multiple functions per file 🚿🚿🚿
@@ -383,6 +384,10 @@ told to indent by two, three, or four spaces, or one tab. As a general rule,
 the indentation should yield a clear visual distinction while not using up all
 your space on the line (see next paragraph).
 
+<table>
+<tr>
+<td>
+
 ```matlab
 for i=1:n
 for j=1:n
@@ -393,7 +398,8 @@ end
 end
 ```
 
-No visual distinction between the loop levels makes it hard to recognize where the first loop ends.[^1]
+</td>
+<td>
 
 ```matlab
 for i=1:n
@@ -405,7 +411,22 @@ for i=1:n
 end
 ```
 
+</td>
+</tr>
+<tr>
+<td>
+
+No visual distinction between the loop levels makes it hard to recognize where
+the first loop ends.[^1]
+
+</td>
+<td>
+
 With indentation, the code looks a lot clearer.\footnotemark[\value{footnote}]
+
+</td>
+</tr>
+</table>
 
 [^1]:
     What the code does is replacing all negative entries of an `n`×`n`-matrix
@@ -431,17 +452,26 @@ Sometimes of course your lines need to stretch longer than this, but that's why
 MATLAB contains the ellipses `...` which makes sure the line following the line
 with the ellipsis is read as if there was no line break at all.
 
+<table>
+<tr>
+<td>
+
 ```matlab
 a = sin( exp(x) ) ...
   - alpha* 4^6    ...
   + u'*v;
 ```
 
+</td>
+<td>
+
 ```matlab
 a = sin( exp(x) ) - alpha* 4^6 + u'*v;
-
-
 ```
+
+</td>
+</tr>
+</table>
 
 ### Spaces and alignment 🚿🚿🚿
 
@@ -497,7 +527,6 @@ expression, are immediately visible to the programmer.
 </tr>
 </table>
 
-
 ##### Spaces in expressions
 
 Closely related to this is the usage of spaces in expressions. The rule is,
@@ -533,6 +562,10 @@ are supposed to do, but one cannot easily tell why. When you, after some time,
 change your mind and you do want to change the value of the radius, it will be
 rather difficult to identify those `1`s which actually refer to it.
 
+<table>
+<tr>
+<td>
+
 ```matlab
 x = 2; y = 0;
 
@@ -549,9 +582,8 @@ if ~isInCircle && isInSquare
 % [...]
 ```
 
-It is not immediately clear if the various `1`s do in the code and
-whether or not they represent one entity. These numbers are called _magic
-numbers._
+</td>
+<td>
 
 ```matlab
 x = 2; y = 0;
@@ -572,8 +604,24 @@ if ~isInCircle && isInSquare
 % [...]
 ```
 
+</td>
+</tr>
+<tr>
+<td>
+
+It is not immediately clear if the various `1`s do in the code and
+whether or not they represent one entity. These numbers are called _magic
+numbers._
+
+</td>
+<td>
+
 The meaning of the variable `radius` is can be instantly seen and its
 value easily altered.
+
+</td>
+</tr>
+</table>
 
 ### Comments 🚿🚿🚿🚿🚿
 
@@ -627,6 +675,7 @@ function out = timeIteration( u, n )
   end
 end
 ```
+
 Function in which `-`-fences are used to emphasize the functionally separate sections of the code.
 
 ### Usage of brackets 🚿🚿
@@ -648,12 +697,15 @@ unnecessary – this will certainly help avoiding confusion.
 isGood =  a<0 ...
        && b>0 || k~=0;
 ```
+
 Without knowing if MATLAB first evaluates the short-circuit AND `&&` or the
 short-circuit OR `||`, it is impossible to predict the value of `isGood`.
+
 ```matlab
 isGood = ( a<0 && b>0 ) ...
        || k~=0;
 ```
+
 With the (unnecessary) brackets, the situation is clear.
 
 ```
@@ -732,6 +784,7 @@ else
   % process solution
 end
 ```
+
 Good practice: there is a maximum number of iterations. When it has been reached, the iteration failed. Throw a warning in that case.
 
 Although you could just evoke `warning() and `error()`with a single string as argument (such as`error('Something went wrong!')`), good style programs will leave the user with a clue _where_ the error has occurred, and of what type the error is (as mnemonic). This information is contained in the so-called _message ID_.
@@ -758,6 +811,7 @@ switch pet
     feedSausages();
 end
 ```
+
 When none of the cases matches, the algorithm will just skip and continue.
 
 ```matlab
@@ -771,6 +825,7 @@ switch pet
           'Unknown pet.'
 end
 ```
+
 The unexpected case is intercepted.
 
 ```matlab
@@ -796,6 +851,7 @@ function p = prime( N )
 
 end
 ```
+
 The same code as in listing~\ref{listing:prime1}, with rules of style applied.
 It should now be somewhat easier to maintain and improve the code. Do you have
 ideas how to speed it up?
@@ -1475,8 +1531,7 @@ function out = A_multiply( u )
 end
 ```
 
-Function that implements matrix-vector multiplication with `1/h^2 \times
-\diag(-1,2,-1)`. Note that the function consumes (almost) no more memory then
+Function that implements matrix-vector multiplication with `1/h^2 \times \diag(-1,2,-1)`. Note that the function consumes (almost) no more memory then
 `u` already required.
 
 ```matlab
