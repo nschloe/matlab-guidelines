@@ -156,10 +156,7 @@ mod(l11,ll1)>1&&mod(l11,ll1)<floor(l11/ll1),...
 lll(ll1,l11+1,l1l+~mod(floor(l11/ll1),mod(l11,ll1)) );
 elseif l11<ll1*ll1;lll(ll1,l11+1,l1l);end;end
 ```
-
-<caption>
 Perfectly legal MATLAB code, with all rules of style ignored. Can you guess what this function does?
-</caption>
 
 #### Multiple functions per file 🚿🚿🚿
 
@@ -282,8 +279,7 @@ implies several things.
   `2.718128`, right?
 
 - In mathematics and computer science, some names are connected to certain
-  meanings. Table~\ref{table:typical-variable-usage} lists a number of widely
-  used conventions.
+  meanings. The following table lists a number of widely used conventions.
 
   | Variable name             | Usual purpose                                            |
   | ------------------------- | -------------------------------------------------------- |
@@ -312,11 +308,10 @@ implies several things.
 
 Short, non-descriptive variable names are quite common in mathematical
 computing as the variable names in the corresponding (pen and paper)
-calculations are hardly ever longer then one character either (see
-table~\ref{table:typical-variable-usage}). To be able to distinguish between
-vector and matrix entities, it is common practice in programming as well as
-mathematics to denote matrices by upper-case, vectors and scalars by lower-case
-characters.
+calculations are hardly ever longer then one character either (see table). To
+be able to distinguish between vector and matrix entities, it is common
+practice in programming as well as mathematics to denote matrices by
+upper-case, vectors and scalars by lower-case characters.
 
 ```matlab
 K = 20;
@@ -611,10 +606,7 @@ function out = timeIteration( u, n )
   end
 end
 ```
-
-<caption>
 Function in which `-`-fences are used to emphasize the functionally separate sections of the code.
-</caption>
 
 ### Usage of brackets 🚿🚿
 
@@ -635,18 +627,13 @@ unnecessary – this will certainly help avoiding confusion.
 isGood =  a<0 ...
        && b>0 || k~=0;
 ```
-
-<caption>
 Without knowing if MATLAB first evaluates the short-circuit AND `&&` or the
 short-circuit OR `||`, it is impossible to predict the value of `isGood`.
-</caption>
 ```matlab
 isGood = ( a<0 && b>0 ) ...
        || k~=0;
 ```
-<caption>
 With the (unnecessary) brackets, the situation is clear.
-</caption>
 
 ```
 \begin{table}
@@ -724,10 +711,7 @@ else
   % process solution
 end
 ```
-
-<caption>
 Good practice: there is a maximum number of iterations. When it has been reached, the iteration failed. Throw a warning in that case.
-</caption>
 
 Although you could just evoke `warning() and `error()`with a single string as argument (such as`error('Something went wrong!')`), good style programs will leave the user with a clue _where_ the error has occurred, and of what type the error is (as mnemonic). This information is contained in the so-called _message ID_.
 
@@ -753,10 +737,7 @@ switch pet
     feedSausages();
 end
 ```
-
-<caption>
 When none of the cases matches, the algorithm will just skip and continue.
-</caption>
 
 ```matlab
 switch pet
@@ -769,10 +750,7 @@ switch pet
           'Unknown pet.'
 end
 ```
-
-<caption>
 The unexpected case is intercepted.
-</caption>
 
 ```matlab
 function p = prime( N )
@@ -797,12 +775,9 @@ function p = prime( N )
 
 end
 ```
-
-<caption>
 The same code as in listing~\ref{listing:prime1}, with rules of style applied.
 It should now be somewhat easier to maintain and improve the code. Do you have
 ideas how to speed it up?
-</caption>
 
 ## Fast code
 
@@ -1384,14 +1359,12 @@ function int = simpson( a, b, h )
 end
 ```
 
-<caption>
 Implementation of Simpson's rule for numerically integrating a function (here:
 `sin`) between `a` and `b`. Note the usage of the vector notation to speed up
 the function. Also note that `sin` is hardcoded into the routine, and needs to
 be changed each time we want to change the function. In case one is interested
 in calculating the integral of $`f(x) = \exp(\sin(\frac{1}{x})) /
 \tan(\sqrt{1-x^4})`$, this could get quite messy.
-</caption>
 
 #### Functions as arguments 🚿🚿🚿
 
@@ -1481,8 +1454,8 @@ function out = A_multiply( u )
 end
 ```
 
-Function that implements matrix-vector multiplication with $`1/h^2 \times
-\diag(-1,2,-1)`$. Note that the function consumes (almost) no more memory then
+Function that implements matrix-vector multiplication with `1/h^2 \times
+\diag(-1,2,-1)`. Note that the function consumes (almost) no more memory then
 `u` already required.
 
 ```matlab
@@ -1527,7 +1500,7 @@ although mathematically written down like that:
 
 In geometric multigrid methods, a domain is discretized with a certain
 parameter $h$ ("grid width") and the operator $`A_h`$ written down for that
-discretization (see the examples above, where $`A_h=h^{-2}\diag(-1,2,1)`$ is
+discretization (see the examples above, where `A_h=h^{-2}\diag(-1,2,1)` is
 really the discretization of the $`\Delta`$-operator in one dimension). In a
 second step, another, somewhat coarser grid is considered with $`H=2h`$, for
 example. The operator $`A_H`$ on the coarser grid is written down as
