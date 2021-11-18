@@ -215,7 +215,6 @@ visible.
 <td>
 
 ```matlab
-\begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
 % [...]
 
 function fun1
@@ -828,12 +827,20 @@ having issued its message.
 tol = 1e-15;
 rho = norm(r);
 
+
+
 while abs(rho)>tol
+
   r   = oneStep( r );
   rho = norm( r );
 end
 
+
+
+
+
 % process solution
+
 ```
 
 </td>
