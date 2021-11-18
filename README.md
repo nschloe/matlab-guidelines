@@ -452,6 +452,50 @@ then, one would like to choose the line break point such that it coincides with
 _semantic_ or _syntactic_ break in the syntax. For examples, see the
 code below.
 
+<table>
+<tr>
+<td>
+
+```matlab
+A = [ 1, 0.5 , 5; 4, ...
+42.23, 33; 0.33, ...
+pi, 1];
+
+a = alpha*(u+v)+beta*...
+sin(p'*q)-t...
+*circleArea(10);
+```
+
+</td>
+<td>
+
+```matlab
+A = [ 1   , 0.5  , 5 ; ...
+      4   , 42.23, 33; ...
+      0.33, pi   , 1   ];
+
+a = alpha* (u+v)     ...
+  + beta*  sin(p'*q) ...
+  - t*     circleArea(10);
+```
+
+</td>
+</tr>
+<tr>
+<td>
+Unsemantic line breaks decrease the readability. Neither the shape of the
+matrix, nor the number of summands in the second expression is clear.
+</td>
+<td>
+
+The shape and contents of the matrix, as well as the elements of the second
+expression, are immediately visible to the programmer.
+
+</td>
+</tr>
+</table>
+
+
 ```matlab
 A = [ 1, 0.5 , 5; 4, ...
 42.23, 33; 0.33, ...
