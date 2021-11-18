@@ -4,28 +4,27 @@
 > feel are not yet quite experienced with it. Its goal is to give a number of
 > hints which enable the reader to write quality MATLAB programs and to avoid
 > commonly made mistakes.
-> 
+>
 > There are three major independent chapters which may very well be read
 > separately. Also, the individual chapters each split up into one or two
 > handful of chunks of information. In that sense, this document is really a
 > slightly extended list of dos and don'ts.
-> 
+>
 > Chapter 1 describes some aspects of _clean_ code. The impact of a
 > subsection for the cleanliness of the code is indicated by one to five
 > 🚿-symbols, where five 🚿's want to say that following
 > the given suggestion is of great importance for the comprehensibility of the
 > code.
-> 
+>
 > Chapter 2 describes how to speed up the code and is largely a list of mistakes
 > that beginners may tend to make. This time, the 🏃-symbol represents
 > the amount of speed that you could gain when sticking to the hints given in
 > the respective section.
-> 
+>
 > This guide is written as part of a basic course in numerical analysis, most
 > examples and codes will hence tend to refer to numerical integration or
 > differential equations. However, almost all aspects are of general nature and
 > will also be of interest to anyone using MATLAB.
-
 
 ## MATLAB alternatives
 
@@ -45,11 +44,11 @@ render all of your own code virtually useless to you.
 Because of that, free and open source MATLAB alternatives have emerged,
 three of which are shortly introduced here. Octave and Scilab try to stick to
 MATLAB syntax as closely as possible, resulting in all of the code in this
-document being legal for the two packages as well.  When it comes to the
+document being legal for the two packages as well. When it comes to the
 specialized toolboxes, however, neither of the alternatives may be able to
 provide the same capabilities that MATLAB offers. However, these are mostly
 functions related to Simulink and the like which are hardly used by beginners
-anyway.  Also note none of the alternatives ships with its own text editor (as
+anyway. Also note none of the alternatives ships with its own text editor (as
 MATLAB does), so you are free yo use the editor of your choice (see, for
 example, [vim](http://www.vim.org/),
 [emacs](http://www.gnu.org/software/emacs/), Kate,
@@ -60,8 +59,7 @@ example, [vim](http://www.vim.org/),
 ### Python
 
 Python is the most modern programming language as of 2013: Amongst the many
-award the language as received stands the TIOBE Programming Language Award of
-2010. It is yearly given to the programming language that has gained the
+award the language as received stands the TIOBE Programming Language Award of 2010. It is yearly given to the programming language that has gained the
 largest market market share during that year.
 
 Python is used in all kinds of different contexts, and its versatility and
@@ -81,7 +79,6 @@ every operating system.
 The author of this document highly recommends to take a look at Python for
 your own (scientific) programming projects.
 
-
 ### Julia
 
 > Julia is a high-level, high-performance dynamic programming language for
@@ -95,7 +92,6 @@ your own (scientific) programming projects.
 > Julia’s built-in package manager at a rapid pace. IJulia, a collaboration
 > between the IPython and Julia communities, provides a powerful browser-based
 > graphical notebook interface to Julia.
-
 
 ### GNU Octave
 
@@ -145,7 +141,7 @@ Examples of messy, unstructured, and generally ugly programs are plenty, but
 there are also places where you are almost guaranteed to find well-structured
 code. Take, for example the MATLAB internals: Many of the functions that
 you might make use of when programming MATLAB are implemented in MATLAB
-syntax themselves -- by professional MathWorks programmers. To look at such
+syntax themselves – by professional MathWorks programmers. To look at such
 the contents of the `mean()` function (which calculates the average
 mean value of an array), type `edit mean` on the MATLAB command
 line. You might not be able to understand what's going on, but the way the
@@ -160,11 +156,13 @@ mod(l11,ll1)>1&&mod(l11,ll1)<floor(l11/ll1),...
 lll(ll1,l11+1,l1l+~mod(floor(l11/ll1),mod(l11,ll1)) );
 elseif l11<ll1*ll1;lll(ll1,l11+1,l1l);end;end
 ```
+
 <caption>
 Perfectly legal MATLAB code, with all rules of style ignored. Can you guess what this function does?
 </caption>
 
 #### Multiple functions per file 🚿🚿🚿
+
 It is a common and false prejudice that MATLAB cannot cope with several
 functions per file. The truth is: There _may_ be more than one function
 in a file, but just the first one in the file will be _visible_ to
@@ -176,6 +174,7 @@ When writing code, think about whether or not a particular function is really
 just a helper, or if needs to be allowed to be called from somewhere else.
 Doing so, you can avoid a cluttered mess of dozens of M-files in your program
 folder.
+
 ```matlab
 % callable from outside:
 function topFun
@@ -194,11 +193,12 @@ function helperFun2
   % [...]
 end
 ```
+
 One source containing three functions: Useful when `helperFun1` and
 `helperFun2` are only needed by `topFun`.
 
-
 ##### Subfunctions 🚿🚿
+
 An issue that may come up if you have quite a lot of functions per file might
 be that you lose sight of which function actually requires which other
 function.
@@ -234,6 +234,7 @@ end
 
 % [...]
 ```
+
 The routines `fun1`, `fun2`, `helpFun1`, and `helpFun2` are sitting next to
 each other and no hierarchy is visible.
 
@@ -258,9 +259,9 @@ end
 
 % [...]
 ```
-Immediately obvious: The first `helpFun` helps `fun1`, the
-second `fun2` -- and does nothing else.
 
+Immediately obvious: The first `helpFun` helps `fun1`, the second `fun2` – and
+does nothing else.
 
 ### Variable and function names - 🚿🚿🚿
 
@@ -273,6 +274,7 @@ comprehensive overview on many aspects of variable naming is given; a few of
 the most useful ones are stated here.
 
 ##### Variable names tell what the variable does
+
 Undoubtedly, this is the first and foremost rule in variable naming, and it
 implies several things.
 
@@ -313,6 +315,7 @@ Variable name                                                 & Usual purpose\\\
 ```
 
 ##### Short variable names
+
 Short, non-descriptive variable names are quite common in mathematical
 computing as the variable names in the corresponding (pen and paper)
 calculations are hardly ever longer then one character either (see
@@ -328,6 +331,7 @@ B = ones(K,1);
 
 U = a*B;
 ```
+
 ```matlab
 k = 20;
 A = zeros(k,k);
@@ -336,50 +340,53 @@ b = ones(k,1);
 u = A*b;
 ```
 
-
 ###### Long variable names
-A widely used convention mostly in the C++ development community to write
-long, descriptive variables in mixed case (camel case) starting with lower
-case, such as
+
+A widely used convention mostly in the C++ development community to write long,
+descriptive variables in mixed case (camel case) starting with lower case, such
+as
+
 ```matlab
-linearity, distanceToCircle, figureLabel.
+linearity, distanceToCircle, figureLabel
 ```
+
 Alternatively, one could use the underscore to separate parts of a compound
 variable name:
+
 ```matlab
-linearity, distance_to_circle, figure_label.
+linearity, distance_to_circle, figure_label
 ```
-This convention is sometimes called _snake case_ and used, for example,
-in the GNU C++ standard libraries.
 
-When using the snake case notation, watch out for variable names in
-MATLAB's plots: its TeX-interpreter will treat the underscore as a switch
-to subscript and a variable name such as `distance_to_circle` will
-read
-\lstinline!distance!$_{\text{\lstinline!t!}}$\lstinline!o!$_{\text{\lstinline!c!}}$\lstinline!ircle!
-in the plot.
+This convention is sometimes called _snake case_ and used, for example, in the
+GNU C++ standard libraries.
 
+When using the snake case notation, watch out for variable names in MATLAB's
+plots: its TeX-interpreter will treat the underscore as a switch to subscript
+and a variable name such as `distance_to_circle` will read
+$`distance_to_circle`$ in the plot.
 
 > Using the hyphen `-` as a separator cannot be considered: MATLAB will
 > immediately interpret `-` as the minus sign, `distance-to-circle` is
 > `distance` minus `to` minus `circle`. The same holds for function names.
 
 ##### Logical variable names
+
 If a variable is supposed to only hold the values `0` or `1` to represent
 `true` or `false`, then the variable name should express that. A common
 technique is to prepend the variable name by `is` and, less common, by `flag`.
+
 ```
 isPrime, isInside, flagCircle
 ```
 
 ### Indentation 🚿🚿🚿🚿
 
-If you ever dealt with nested `for`- and `if` constructs,
-then you probably noticed that it may sometimes be hard to distinguish those
-nested constructions from other code at first sight. Also, if the contents of
-a loop extend over more than just a few lines, a visual aid may be helpful for
-indicating what is inside and what is outside the loop -- and this is where
-indentation comes into play.
+If you ever dealt with nested `for`- and `if` constructs, then you probably
+noticed that it may sometimes be hard to distinguish those nested constructions
+from other code at first sight. Also, if the contents of a loop extend over
+more than just a few lines, a visual aid may be helpful for indicating what is
+inside and what is outside the loop – and this is where indentation comes into
+play.
 
 Usually, one would indent everything within a loop, a function, a conditional,
 a `switch` statement and so on. Depending on who you ask, you will be
@@ -396,6 +403,7 @@ end
 end
 end
 ```
+
 No visual distinction between the loop levels makes it hard to recognize where the first loop ends.[^1]
 
 ```matlab
@@ -407,13 +415,13 @@ for i=1:n
   end
 end
 ```
+
 With indentation, the code looks a lot clearer.\footnotemark[\value{footnote}]
 
-[^1]: What the code does is replacing all negative entries of an `n`×`n`-matrix
-  by `0`. There is, however, a much better (shorter, faster) way to achieve
-  this: `A( A<0 ) = 0`; (see page \pageref{sec:logicalIndexing}).
-
-
+[^1]:
+    What the code does is replacing all negative entries of an `n`×`n`-matrix
+    by `0`. There is, however, a much better (shorter, faster) way to achieve
+    this: `A( A<0 ) = 0`; (see page \pageref{sec:logicalIndexing}).
 
 ### Line length 🚿
 
@@ -439,21 +447,22 @@ a = sin( exp(x) ) ...
   - alpha* 4^6    ...
   + u'*v;
 ```
+
 ```matlab
 a = sin( exp(x) ) - alpha* 4^6 + u'*v;
 
 
 ```
 
-
 ### Spaces and alignment 🚿🚿🚿
 
 In some situations, it makes sense to break a line although it has not up to
 the limit, yet. This may be the case when you are dealing with an expression
-that -- because of its length -- has to break anyway further to the right;
+that – because of its length – has to break anyway further to the right;
 then, one would like to choose the line break point such that it coincides with
 _semantic_ or _syntactic_ break in the syntax. For examples, see the
 code below.
+
 ```matlab
 A = [ 1, 0.5 , 5; 4, ...
 42.23, 33; 0.33, ...
@@ -463,6 +472,7 @@ a = alpha*(u+v)+beta*...
 sin(p'*q)-t...
 *circleArea(10);
 ```
+
 Unsemantic line breaks decrease the readability. Neither the shape of the
 matrix, nor the number of summands in the second expression is clear.
 
@@ -475,24 +485,28 @@ a = alpha* (u+v)     ...
   + beta*  sin(p'*q) ...
   - t*     circleArea(10);
 ```
+
 The shape and contents of the matrix, as well as the elements of the second expression, are immediately visible to the programmer.
 
 ##### Spaces in expressions
+
 Closely related to this is the usage of spaces in expressions. The rule is,
 again: put spaces there where MATLAB's syntax would. Consider the following
 example.
+
 ```matlab
 aValue = 5+6 / 3*4;
 ```
+
 This spacing suggests that the value of `aValue` will be 11/12, which is of
 course not the case.
 
 ```matlab
 aValue = 5 + 6/3*4;
 ```
+
 Much better, as the the fact that the addition is executed last gets reflected
 by according spacing.
-
 
 ### Magic numbers 🚿🚿🚿
 
@@ -503,7 +517,7 @@ the same time inside a square of edge length 2, right enclosing the circle (see
 \cite{Hull:2006:CCM}).
 
 When finished, the code will contain a couple of `1`s but it will not be clear
-if they are distinct or refer to the same abstract value (see below).  Those
+if they are distinct or refer to the same abstract value (see below). Those
 hard coded numbers are frequently called _magic numbers_, as they do what they
 are supposed to do, but one cannot easily tell why. When you, after some time,
 change your mind and you do want to change the value of the radius, it will be
@@ -524,6 +538,7 @@ isInSquare = ...
 if ~isInCircle && isInSquare
 % [...]
 ```
+
 It is not immediately clear if the various `1`s do in the code and
 whether or not they represent one entity. These numbers are called _magic
 numbers._
@@ -546,6 +561,7 @@ isInSquare = ...
 if ~isInCircle && isInSquare
 % [...]
 ```
+
 The meaning of the variable `radius` is can be instantly seen and its
 value easily altered.
 
@@ -557,6 +573,7 @@ be used to explain the source code in English (or your tribal language, if you
 prefer).
 
 ##### Documentation 🚿🚿🚿🚿🚿
+
 There should be a big fat neon-red blinking frame around this paragraph, as
 documentation is _the_ single most important aspect about clean and
 readable code. Unfortunately, it also takes the longest to write which is why
@@ -565,12 +582,12 @@ you will find undocumented source code everywhere you go.
 Look at listing~\ref{listing:fences} for a suggestion for quick and clear
 documentation, and see if you can do it yourself!
 
-
 ##### Structuring elements 🚿🚿🚿
+
 It is always useful to have the beginning and the end of the function not only
 indicated by the respective keywords, but also by something more visible.
 Consider building 'fences' with commented `#`, `!=`, or `-` characters, to
-visually separate distinct parts of the code.  This comes in very handy when
+visually separate distinct parts of the code. This comes in very handy when
 there are multiple functions in one source file, for example, or when there is
 a `for`-loop that stretches over that many lines that you cannot easily find
 the corresponding `end` anymore.
@@ -600,10 +617,10 @@ function out = timeIteration( u, n )
   end
 end
 ```
+
 <caption>
 Function in which `-`-fences are used to emphasize the functionally separate sections of the code.
 </caption>
-
 
 ### Usage of brackets 🚿🚿
 
@@ -618,12 +635,13 @@ is admittedly very rare).
 Of course one can always look those up (see
 table~\ref{table:operator-precedence}), but to save the work one could equally
 quick just insert a pair of bracket at the right spot, although they may be
-unnecessary -- this will certainly help avoiding confusion.
+unnecessary – this will certainly help avoiding confusion.
 
 ```matlab
 isGood =  a<0 ...
        && b>0 || k~=0;
 ```
+
 <caption>
 Without knowing if MATLAB first evaluates the short-circuit AND `&&` or the
 short-circuit OR `||`, it is impossible to predict the value of `isGood`.
@@ -688,9 +706,11 @@ end
 
 % process solution
 ```
+
 Iteration over a variable `r` that is supposed to be smaller than `tol` after
 some iterations. If that fails, the loop will never exit and occupy the CPU
 forever.
+
 ```matlab
 tol  = 1e-15;
 rho  = norm(r);
@@ -710,11 +730,12 @@ else
   % process solution
 end
 ```
+
 <caption>
 Good practice: there is a maximum number of iterations. When it has been reached, the iteration failed. Throw a warning in that case.
 </caption>
 
-Although you could just evoke `warning() and `error()` with a single string as argument (such as `error('Something went wrong!')`), good style programs will leave the user with a clue _where_ the error has occurred, and of what type the error is (as mnemonic). This information is contained in the so-called _message ID_.
+Although you could just evoke `warning() and `error()`with a single string as argument (such as`error('Something went wrong!')`), good style programs will leave the user with a clue _where_ the error has occurred, and of what type the error is (as mnemonic). This information is contained in the so-called _message ID_.
 
 The MATLAB help page contain quite a bit about message IDs, for example:
 
@@ -738,6 +759,7 @@ switch pet
     feedSausages();
 end
 ```
+
 <caption>
 When none of the cases matches, the algorithm will just skip and continue.
 </caption>
@@ -753,10 +775,10 @@ switch pet
           'Unknown pet.'
 end
 ```
+
 <caption>
 The unexpected case is intercepted.
 </caption>
-
 
 ```matlab
 function p = prime( N )
@@ -781,12 +803,12 @@ function p = prime( N )
 
 end
 ```
+
 <caption>
 The same code as in listing~\ref{listing:prime1}, with rules of style applied.
 It should now be somewhat easier to maintain and improve the code. Do you have
 ideas how to speed it up?
 </caption>
-
 
 ## Fast code
 
@@ -840,7 +862,6 @@ trying to optimize one should start there.}
 > stopping it, followed by various commands to evaluate the gathers statistics.
 > See the MATLAB help page on `profile`.
 
-
 ### The MATtrix LABoratory
 
 Contrary to common belief, the MAT in MATLAB does not stand for mathematics,
@@ -867,7 +888,6 @@ with matrix operations with compiled languages.
 > as `eig()` (for finding the eigenvalues of a matrix), `\` (for solving a
 > linear equation system with Gaußian[^2] elimination), and so on.
 
-
 #### Matrix pre-allocation 🏃🏃🏃🏃🏃
 
 When a matrix appears in MATLAB code for the first time, its contents need to
@@ -892,6 +912,7 @@ for i = 1:n
     u(i) = sqrt(i);
 end
 ```
+
 <caption>
 The vector `u` is growing `n` times and it probably must be re-allocated as
 often. The approximate execution time of this code snippet is \extime{21.20}.
@@ -904,17 +925,16 @@ for i = 1:n
     u(i) = sqrt(i);
 end
 ```
+
 <caption>
 As maximum size of the vector is known beforehand, one can easily tell MATLAB
 to place `u` into memory with the appropriate size. The code here merely takes
 **3.8 ms** to execute!
 </caption>
 
-
 > The previous code example is actually a little misleading as there is a much
-> quicker way to fill `u` with the square roots of consecutive numbers.  Can
+> quicker way to fill `u` with the square roots of consecutive numbers. Can
 > you find the one-liner? A look into the next section could help...
-
 
 #### Loop vectorization - 🏃🏃🏃🏃🏃
 
@@ -922,15 +942,16 @@ Because of the reasons mentioned in the beginning of this section, you would
 like to avoid loops wherever you can and try to replace it by a vectorized
 operation.
 
-When people commonly speak of `optimizing code for MATLAB', it will most
-often be this particular aspect. The topic is huge and this section can merely
-give the idea of it. If you are stuck with slow loop operations and you have
-no idea how to make it really quick, take a look at the excellent and
-comprehensive guide at \cite{Mathworks:2009:CVG}. -- There is almost always a
-way to vectorize.
+When people commonly speak of 'optimizing code for MATLAB', it will most often
+be this particular aspect. The topic is huge and this section can merely give
+the idea of it. If you are stuck with slow loop operations and you have no idea
+how to make it really quick, take a look at the excellent and comprehensive
+guide at \cite{Mathworks:2009:CVG}. – There is almost always a way to
+vectorize.
 
 Consider the following example a general scheme of how to remove loops from
 vectorizable operations.
+
 ```matlab
 n = 1e7;
 a = 1;
@@ -944,6 +965,7 @@ for i=1:n
   y(i) = x(i) - sin(x(i))^2;
 end
 ```
+
 <caption>
 Computation of `f(x)=x-\sin^2(x)` on `n` points between `a` and `b`. In this
 version, each and every single point is being treated explicitly. Execution
@@ -962,6 +984,7 @@ x = (a:h:b);
 
 y = x - sin(x).^2;
 ```
+
 <caption>
 Does the same thing using vector notation. Execution time: approx. 0.12.
 </caption>
@@ -970,8 +993,8 @@ The `sin()` function in MATLAB hence takes a vector as argument and acts as of
 it operated on each element of it. Almost all MATLAB functions have this
 capability, so make use of it if you can!
 
-
 ##### Vector indexing and boolean indexing.
+
 When dealing with vectors or matrices, it may sometimes happen that one has to
 work only on certain entries of the object, e.g., those with odd index.
 
@@ -987,6 +1010,7 @@ for k = 1:2:n
   v(k) = 0;
 end
 ```
+
 Classical loop of the entries of interest (\extime{1.04}).
 
 ```matlab
@@ -996,6 +1020,7 @@ n = length(v);
 
 v(1:2:n) = 0;
 ```
+
 Vector indexing: Matrices take (positive) integer vectors as arguments
 (1.14).
 
@@ -1007,6 +1032,7 @@ mask = false(n,1);
 mask(1:2:n) =true;
 v( mask ) = 0;
 ```
+
 Boolean indexing: Matrices take _boolean_ arrays\footnotemark{} with the
 same shape as `v` as arguments (\extime{1.41}).
 
@@ -1019,9 +1045,8 @@ the code shorter, but creates a slight overhead; boolean indexing, by having to
 create the boolean array `mask`, is significantly slower.
 
 However, should the criteria upon which action is taken dynamically depend on
-the content of the vector itself, the situation is different.  Consider again
-the three schemes, this time for setting the `NaN` entries of a vector `v` to
-0.
+the content of the vector itself, the situation is different. Consider again
+the three schemes, this time for setting the `NaN` entries of a vector `v` to 0.
 
 ```matlab
 % [...] create v
@@ -1032,6 +1057,7 @@ for k = 1:n
   end
 end
 ```
+
 Classical loop: \extime{1.19}.
 
 ```matlab
@@ -1041,6 +1067,7 @@ ind = ...
   find(isnan(v));
 v( ind ) = 0;
 ```
+
 Vector indexing: \extime{0.44}.
 
 ```matlab
@@ -1050,6 +1077,7 @@ mask = isnan(v);
 
 v( mask ) = 0;
 ```
+
 Boolean indexing: \extime{0.33}.
 
 Iterating through the array `v` and checking each element
@@ -1064,7 +1092,6 @@ example, `mask = isnan(v) | isinf(v);` is `true` wherever
 `v!`has a `NaN` _or_ an `Inf`.}.
 
 See also \cite{Mathworks:2001:MIM}.
-
 
 #### Solving a linear equation system 🚿🚿🏃🏃🏃
 
@@ -1094,6 +1121,7 @@ b = rand(n,1);
 
 u = inv(A)*b;
 ```
+
 Solving the equation system with an explicit inverse. Execution time: approx.
 \extime{2.02}.
 
@@ -1104,8 +1132,8 @@ b = rand(n,1);
 
 u = A\b;
 ```
-Solving the equation system with the `\` operator. Execution time: approx. \extime{0.80}.
 
+Solving the equation system with the `\` operator. Execution time: approx. \extime{0.80}.
 
 #### Dense and sparse matrices 🏃🏃🏃🏃🏃
 
@@ -1128,7 +1156,7 @@ In particular, one can
   enormous amount of computational time.
 
 Of course, operations which only involve sparse matrices will also return a
-sparse matrix (such as matrix--matrix multiplication `*`, `transpose`, `kron`,
+sparse matrix (such as matrix-matrix multiplication `*`, `transpose`, `kron`,
 and so forth).
 
 ```matlab
@@ -1168,6 +1196,7 @@ A = A / h^2;
 
 % continued below
 ```
+
 The three-line equivalent using the sparse matrix format. The code is not only
 shorter, easier to read, but also saves gigantic amounts of memory. Execution
 time: \textbf{\SI{5.4}{\milli\second}}!
@@ -1177,6 +1206,7 @@ time: \textbf{\SI{5.4}{\milli\second}}!
 b = ones(n,1);
 u = A\b;
 ```
+
 Gaußian elimination with a tridiagonal matrix in dense format. Execution time:
 \extime{55.06}.
 
@@ -1185,12 +1215,10 @@ Gaußian elimination with a tridiagonal matrix in dense format. Execution time:
 b = ones(n,1);
 u = A\b;
 ```
+
 The same syntax, with `A` being sparse. Execution time: \textbf{\SI{0.36}{\milli\second}}!
 
-
 👉 Useful functions: `sparse()`, `spdiags()`, `speye()`, (`kron()`),...
-
-
 
 #### Repeated solution of an equation system with the same matrix 🏃🏃🏃🏃🏃
 
@@ -1211,6 +1239,7 @@ for i=1:k
     u(:,k) = A \ B(:,k);
 end
 ```
+
 Consecutively solving with a couple of right-hand sides. Execution time:
 \extime{5.64}.
 
@@ -1225,6 +1254,7 @@ B = rand(n,k);
 
 u = A \ B;
 ```
+
 Solving with a number of right hand sides in one go. Execution time:
 \extime{0.13}.
 
@@ -1249,6 +1279,7 @@ for i = 1:k
   u = A\u;
 end
 ```
+
 Computing $`u = A^{-k}u_0`$ by solving the equation systems in the ordinary way.
 Execution time: \extime{38.94}.
 
@@ -1264,8 +1295,9 @@ for i = 1:k
   u = U\( L\u );
 end
 ```
+
 Computing $`u = A^{-k}u_0`$ by $`LU`$-factoring the matrix, then solving with the
-$`LU`$ factors. Execution time: \extime{5.35}. Of course, when increasing  the
+$`LU`$ factors. Execution time: \extime{5.35}. Of course, when increasing the
 number $`k`$ of iterations, the speed gain compared to the `A\` will
 be more and more dramatic.
 
@@ -1273,8 +1305,8 @@ be more and more dramatic.
 > corrupted with round-off errors such that after `k=50` steps, the norm of the
 > residual $`\|u_0-A^ku\|`$, which ideally equals 0, can be pretty large.
 
-
 ##### Factorizing sparse matrices.
+
 When $`LU`$- or Cholesky-factorizing a _sparse matrix_, the factor(s) are in
 general not sparse anymore and can demand quite an amount of space in memory to
 the point where no computer can cope with that anymore. The phenomenon of
@@ -1292,7 +1324,7 @@ as `colrcm()` and `colamd()`, respectively (with versions `symrcm()` and
 
 One can also leave all the fine-tuning to MATLAB by executing `lu()` for sparse
 matrices with more output arguments; this will return a factorization for the
-permuted and row-scaled  matrix $`PR^{-1}AQ = LU`$ (see MATLAB's help pages and
+permuted and row-scaled matrix $`PR^{-1}AQ = LU`$ (see MATLAB's help pages and
 example below) to reduce fill-in and increase the stability of the algorithm.
 
 ```matlab
@@ -1310,6 +1342,7 @@ for i = 1:k
   u = U\( L\u );
 end
 ```
+
 Ordinary $`LU`$-factorization for a sparse matrix `A`. The factors `L` and `U`
 are initialized as sparse matrices as well, but the fill-in phenomenon will
 undo this advantage. Execution time: \extime{4.31}.
@@ -1329,6 +1362,7 @@ for i = 1:k
   u = Q*( U\(L\(P*(R\u))) );
 end
 ```
+
 $`LU`$-factoring with permutation and row-scaling. This version can use less
 memory, execute faster, and provide more stability than the ordinary
 $`LU`$-factorization. Execution time: \extime{0.07}.
@@ -1336,13 +1370,12 @@ $`LU`$-factorization. Execution time: \extime{0.07}.
 This factorization is implicitly applied by MATLAB when using the
 `\`-operator for solving a sparse system of equations _once._
 
-
-[^2]: Johann Carl Friedrich Gauß (1777--1855), German mathematician and deemed
-  one of the greatest mathematicians of all times. In the English-speaking
-  world, the spelling with _ss_ instead of the original _ß_ has achieved wide
-  acceptance -- probably because the _ß_ is not included in the key set of any
-  keyboard layout except the German one.
-
+[^2]:
+    Johann Carl Friedrich Gauß (1777–1855), German mathematician and deemed
+    one of the greatest mathematicians of all times. In the English-speaking
+    world, the spelling with _ss_ instead of the original _ß_ has achieved wide
+    acceptance – probably because the _ß_ is not included in the key set of any
+    keyboard layout except the German one.
 
 ## Other tips & tricks
 
@@ -1362,6 +1395,7 @@ function int = simpson( a, b, h )
 
 end
 ```
+
 <caption>
 Implementation of Simpson's rule for numerically integrating a function (here:
 `sin`) between `a` and `b`. Note the usage of the vector notation to speed up
@@ -1402,6 +1436,7 @@ function int = simpson( f, a, b, h )
 
 end
 ```
+
 Simpson's rule with function handles. Note that the syntax for function arguments is no different from that of ordinary ones.
 
 ```matlab
@@ -1418,7 +1453,6 @@ where the function name need to be prepended by the `@`-character.
 The function `f()` can be any function that you defined yourself and
 which is callable as `f(x)` with `x` being a vector of $`x`$
 values (like it is used in `simpson()`, listing~\ref{listing:simpson2}).
-
 
 #### Implicit matrix-vector products 🚿
 
@@ -1447,7 +1481,7 @@ approach.
 
 ```matlab
 function out = A_multiply( u )
-  % Implements matrix--vector multiplication with
+  % Implements matrix-vector multiplication with
   % diag[-1,2,-1]/h^2  .
 
   n   = length( u );
@@ -1458,7 +1492,8 @@ function out = A_multiply( u )
 
 end
 ```
-Function that implements matrix--vector multiplication with $`1/h^2 \times
+
+Function that implements matrix-vector multiplication with $`1/h^2 \times
 \diag(-1,2,-1)`$. Note that the function consumes (almost) no more memory then
 `u` already required.
 
@@ -1471,6 +1506,7 @@ for i=1:k
     u = A_multiply( u );
 end
 ```
+
 Computing $`u = A^ku_0`$ with the function `A_multiply`
 (listing~\ref{listing:Amultiply}). The memory consumption of this routine is
 (almost) no greater than storing $`n`$ real numbers. Execution time:
@@ -1491,6 +1527,7 @@ for i=1:k
     u = A*u;
 end
 ```
+
 Computing $`u = A^ku_0`$ with a regular sparse format matrix `A`, with the need to store it in memory. Execution time: \extime{7}.
 
 All in all, these considerations shall not lead you to rewrite all you
@@ -1506,9 +1543,11 @@ discretization (see the examples above, where $`A_h=h^{-2}\diag(-1,2,1)`$ is
 really the discretization of the $`\Delta`$-operator in one dimension). In a
 second step, another, somewhat coarser grid is considered with $`H=2h`$, for
 example. The operator $`A_H`$ on the coarser grid is written down as
+
 ```math
 A_H = I_h^H A_h I_H^h,
 ```
+
 where the $`I_*^*`$ operators define the transition from the coarse to the fine
 grid, or the other way around. When applying it to a vector on the coarse grid
 $`u_H`$ ($`A_Hu_H =I_h^H A_h I_H^h u_H`$), the above definition reads:
@@ -1526,16 +1565,16 @@ figure~\ref{subfig:coarse-fine}).
 \begin{figure}
 \centering
 \begin{subfigure}{0.45\textwidth}
-  \input{figures/coarse-fine.tex}
-  \caption{Possible transformation rule when translating values from the
-  coarse to the fine grid. See listing~\ref{listing:IHh}.}
-  \label{subfig:coarse-fine}
+\input{figures/coarse-fine.tex}
+\caption{Possible transformation rule when translating values from the
+coarse to the fine grid. See listing~\ref{listing:IHh}.}
+\label{subfig:coarse-fine}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.45\textwidth}
-  \input{figures/fine-coarse.tex}
-  \caption{Mapping back from fine to coarse.}
-  \label{subfig:fine-coarse}
+\input{figures/fine-coarse.tex}
+\caption{Mapping back from fine to coarse.}
+\label{subfig:fine-coarse}
 \end{subfigure}
 \caption{}
 \end{figure}
@@ -1554,6 +1593,7 @@ function uFine = coarse2fine( uCoarse )
 
 end
 ```
+
 Function that implements the operator $`I_H^h`$ from the example (see
 figure~\ref{subfig:coarse-fine}). Writing down the structure of the
 corresponding matrix would be somewhat complicated, and even more so when
