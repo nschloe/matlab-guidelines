@@ -285,34 +285,28 @@ implies several things.
   meanings. Table~\ref{table:typical-variable-usage} lists a number of widely
   used conventions.
 
-```
-\begin{table}
-\centering
-\begin{tabular}{ll}
-\toprule
-Variable name                                                 & Usual purpose\\\midrule
-\lstinline!m!, \lstinline!n!                                  & integer sizes (,e.g., the dimension of a matrix)\\
-\lstinline!i!, \lstinline!j!, \lstinline!k! (, \lstinline!l!) & integer numbers (mostly loop indices)\\
-\lstinline!x!, \lstinline!y!                                  & real values ($x$-, $y$-axis)\\
-\lstinline!z!                                                 & complex value or $z$-axis\\
-\lstinline!c!                                                 & complex value or constant (or both)\\
-\lstinline!t!                                                 & time value\\
-\lstinline!e!                                                 & the Eulerian number or `unit' entities\\
-\lstinline!f!, \lstinline!g! (, \lstinline!h!)                & generic function names\\
-\lstinline!h!                                                 & spatial discretization parameter (in numerical analysis)\\
-\lstinline!epsilon!, \lstinline!delta!                        & small real entities\\
-\lstinline!alpha!, \lstinline!beta!                           & angles or parameters\\
-\lstinline!theta!, \lstinline!tau!                            & parameters, time discretization parameter (in n.a.)\\
-\lstinline!kappa!, \lstinline!sigma!, \lstinline!omega!       & parameters\\
-\lstinline!u!, \lstinline!v!, \lstinline!w!                   & vectors\\
-\lstinline!A!, \lstinline!M!                                  & matrices\\
-\lstinline!b!                                                 & right-hand side of an equation system\\\bottomrule
-\end{tabular}
-\caption{Variable names and their usual purposes in source codes. These guidelines are not particularly strict, but for example one would never use \lstinline!i! to hold a float number, nor \lstinline!x! for an integer.}
-\label{table:typical-variable-usage}
-\end{table}
-\end{itemize}
-```
+  | Variable name             | Usual purpose                                            |
+  | ------------------------- | -------------------------------------------------------- |
+  | `m`, `n`                  | integer sizes (,e.g., the dimension of a matrix)         |
+  | `i`, `j`, `k` (, `l`)     | integer numbers (mostly loop indices)                    |
+  | `x`, `y`                  | real values ($`x`$-, $`y`$-axis)                         |
+  | `z`                       | complex value or $`z`$-axis                              |
+  | `c`                       | complex value or constant (or both)                      |
+  | `t`                       | time value                                               |
+  | `e`                       | the Euler's number or 'unit' entities                    |
+  | `f`, `g` (, `h`)          | generic function names                                   |
+  | `h`                       | spatial discretization parameter (in numerical analysis) |
+  | `epsilon`, `delta`        | small real entities                                      |
+  | `alpha`, `beta`           | angles or parameters                                     |
+  | `theta`, `tau`            | parameters, time discretization parameter (in n.a.)      |
+  | `kappa`, `sigma`, `omega` | parameters                                               |
+  | `u`, `v`, `w`             | vectors                                                  |
+  | `A`, `M`                  | matrices                                                 |
+  | `b`                       | right-hand side of an equation system                    |
+
+  Variable names and their usual purposes in source codes. These guidelines are
+  not particularly strict, but for example one would never use `i` to hold a
+  float number, nor `x` for an integer.
 
 ##### Short variable names
 
@@ -912,6 +906,7 @@ for i = 1:n
     u(i) = sqrt(i);
 end
 ```
+
 The vector `u` is growing `n` times and it probably must be re-allocated as
 often. The approximate execution time of this code snippet is **21.20**.
 
@@ -922,6 +917,7 @@ for i = 1:n
     u(i) = sqrt(i);
 end
 ```
+
 As maximum size of the vector is known beforehand, one can easily tell MATLAB
 to place `u` into memory with the appropriate size. The code here merely takes
 **3.8 ms** to execute!
@@ -959,6 +955,7 @@ for i=1:n
   y(i) = x(i) - sin(x(i))^2;
 end
 ```
+
 Computation of `f(x)=x-\sin^2(x)` on `n` points between `a` and `b`. In this
 version, each and every single point is being treated explicitly. Execution
 time: approx. 0.91.
@@ -975,6 +972,7 @@ x = (a:h:b);
 
 y = x - sin(x).^2;
 ```
+
 Does the same thing using vector notation. Execution time: approx. 0.12.
 
 The `sin()` function in MATLAB hence takes a vector as argument and acts as of
@@ -1020,12 +1018,13 @@ mask = false(n,1);
 mask(1:2:n) =true;
 v( mask ) = 0;
 ```
+
 Boolean indexing: Matrices take _boolean_ arrays[^3] with the
 same shape as `v` as arguments (**1.41**).
 
-[^3]: A mistake that beginners tend to make is to define `mask` as an array of
-  integers, such as `mask = zeros(n,1);`.
-
+[^3]:
+    A mistake that beginners tend to make is to define `mask` as an array of
+    integers, such as `mask = zeros(n,1);`.
 
 In this case, where the indices to be worked on are known beforehand, the
 classical way of looping over the error is the fastest. Vector indexing makes
@@ -1075,10 +1074,10 @@ indices to 0 in one go. Even better than that, doing away with the overhead
 that `find()` creates, is to use the boolean array that `isnan()` returns to
 index `v` directly[^4].
 
-
-[^4]: Remember: You can combine several `mask`s with the logical operators `&`
-  (_and_) and `|` (_or_). For example, `mask = isnan(v) | isinf(v);` is `true`
-  wherever `v!`has a `NaN` _or_ an `Inf`.
+[^4]:
+    Remember: You can combine several `mask`s with the logical operators `&`
+    (_and_) and `|` (_or_). For example, `mask = isnan(v) | isinf(v);` is `true`
+    wherever `v!`has a `NaN` _or_ an `Inf`.
 
 See also \cite{Mathworks:2001:MIM}.
 
