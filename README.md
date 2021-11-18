@@ -898,7 +898,7 @@ The MATLAB help page contain quite a bit about message IDs, for example:
 > has the format `component:mnemonic`. Its purpose is to better identify the
 > source of the error.
 
-### Switch statements - 🚿🚿
+### Switch statements 🚿🚿
 
 `switch` statements are in use whenever one would otherwise have to write a
 conditional statement with several `elseif` statements. They are also
