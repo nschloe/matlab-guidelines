@@ -483,8 +483,10 @@ a = alpha* (u+v)     ...
 </tr>
 <tr>
 <td>
+
 Unsemantic line breaks decrease the readability. Neither the shape of the
 matrix, nor the number of summands in the second expression is clear.
+
 </td>
 <td>
 
@@ -495,31 +497,6 @@ expression, are immediately visible to the programmer.
 </tr>
 </table>
 
-
-```matlab
-A = [ 1, 0.5 , 5; 4, ...
-42.23, 33; 0.33, ...
-pi, 1];
-
-a = alpha*(u+v)+beta*...
-sin(p'*q)-t...
-*circleArea(10);
-```
-
-Unsemantic line breaks decrease the readability. Neither the shape of the
-matrix, nor the number of summands in the second expression is clear.
-
-```matlab
-A = [ 1   , 0.5  , 5 ; ...
-      4   , 42.23, 33; ...
-      0.33, pi   , 1   ];
-
-a = alpha* (u+v)     ...
-  + beta*  sin(p'*q) ...
-  - t*     circleArea(10);
-```
-
-The shape and contents of the matrix, as well as the elements of the second expression, are immediately visible to the programmer.
 
 ##### Spaces in expressions
 
