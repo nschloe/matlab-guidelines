@@ -210,6 +210,10 @@ _clearly associated_ with its parent function. When looking at the code
 for the first time, the relations between the functions are immediately
 visible.
 
+<table>
+<tr>
+<td>
+
 ```matlab
 \begin{lstlisting}[framerule=2pt,rulecolor=\color{badred}]
 % [...]
@@ -233,8 +237,8 @@ end
 % [...]
 ```
 
-The routines `fun1`, `fun2`, `helpFun1`, and `helpFun2` are sitting next to
-each other and no hierarchy is visible.
+</td>
+<td>
 
 ```matlab
 % [...]
@@ -258,10 +262,25 @@ end
 % [...]
 ```
 
+</td>
+</tr>
+<tr>
+<td>
+
+The routines `fun1`, `fun2`, `helpFun1`, and `helpFun2` are sitting next to
+each other and no hierarchy is visible.
+
+</td>
+<td>
+
 Immediately obvious: The first `helpFun` helps `fun1`, the second `fun2` – and
 does nothing else.
 
-### Variable and function names - 🚿🚿🚿
+</td>
+</tr>
+</table>
+
+### Variable and function names 🚿🚿🚿
 
 One key ingredient for a consistent source code is a consistent naming scheme
 for the variables in use. From the dawn of programming languages in the 1950s,
@@ -314,6 +333,10 @@ be able to distinguish between vector and matrix entities, it is common
 practice in programming as well as mathematics to denote matrices by
 upper-case, vectors and scalars by lower-case characters.
 
+<table>
+<tr>
+<td>
+
 ```matlab
 K = 20;
 a = zeros(K,K);
@@ -322,6 +345,9 @@ B = ones(K,1);
 U = a*B;
 ```
 
+</td>
+<td>
+
 ```matlab
 k = 20;
 A = zeros(k,k);
@@ -329,6 +355,10 @@ b = ones(k,1);
 
 u = A*b;
 ```
+
+</td>
+</tr>
+</table>
 
 ###### Long variable names
 
@@ -533,19 +563,38 @@ Closely related to this is the usage of spaces in expressions. The rule is,
 again: put spaces there where MATLAB's syntax would. Consider the following
 example.
 
+<table>
+<tr>
+<td>
+
 ```matlab
 aValue = 5+6 / 3*4;
 ```
 
-This spacing suggests that the value of `aValue` will be 11/12, which is of
-course not the case.
+</td>
+<td>
 
 ```matlab
 aValue = 5 + 6/3*4;
 ```
 
+</td>
+</tr>
+<tr>
+<td>
+
+This spacing suggests that the value of `aValue` will be 11/12, which is of
+course not the case.
+
+</td>
+<td>
+
 Much better, as the the fact that the addition is executed last gets reflected
 by according spacing.
+
+</td>
+</tr>
+</table>
 
 ### Magic numbers 🚿🚿🚿
 
@@ -568,6 +617,9 @@ rather difficult to identify those `1`s which actually refer to it.
 
 ```matlab
 x = 2; y = 0;
+
+
+
 
 pointsDistance = ...
   norm( [x,y]-[1,1] );
@@ -693,20 +745,39 @@ table~\ref{table:operator-precedence}), but to save the work one could equally
 quick just insert a pair of bracket at the right spot, although they may be
 unnecessary – this will certainly help avoiding confusion.
 
+<table>
+<tr>
+<td>
+
 ```matlab
 isGood =  a<0 ...
        && b>0 || k~=0;
 ```
 
-Without knowing if MATLAB first evaluates the short-circuit AND `&&` or the
-short-circuit OR `||`, it is impossible to predict the value of `isGood`.
+</td>
+<td>
 
 ```matlab
 isGood = ( a<0 && b>0 ) ...
        || k~=0;
 ```
 
+</td>
+</tr>
+<tr>
+<td>
+
+Without knowing if MATLAB first evaluates the short-circuit AND `&&` or the
+short-circuit OR `||`, it is impossible to predict the value of `isGood`.
+
+</td>
+<td>
+
 With the (unnecessary) brackets, the situation is clear.
+
+</td>
+</tr>
+</table>
 
 ```
 \begin{table}
@@ -749,6 +820,10 @@ clean way out is using `warning()` and `error()`. - The latter differs from the
 former only in that it terminates the execution of the program right after
 having issued its message.
 
+<table>
+<tr>
+<td>
+
 ```matlab
 tol = 1e-15;
 rho = norm(r);
@@ -761,9 +836,8 @@ end
 % process solution
 ```
 
-Iteration over a variable `r` that is supposed to be smaller than `tol` after
-some iterations. If that fails, the loop will never exit and occupy the CPU
-forever.
+</td>
+<td>
 
 ```matlab
 tol  = 1e-15;
@@ -785,9 +859,30 @@ else
 end
 ```
 
-Good practice: there is a maximum number of iterations. When it has been reached, the iteration failed. Throw a warning in that case.
+</td>
+</tr>
+<tr>
+<td>
 
-Although you could just evoke `warning() and `error()`with a single string as argument (such as`error('Something went wrong!')`), good style programs will leave the user with a clue _where_ the error has occurred, and of what type the error is (as mnemonic). This information is contained in the so-called _message ID_.
+Iteration over a variable `r` that is supposed to be smaller than `tol` after
+some iterations. If that fails, the loop will never exit and occupy the CPU
+forever.
+
+</td>
+<td>
+
+Good practice: there is a maximum number of iterations. When it has been
+reached, the iteration failed. Throw a warning in that case.
+
+</td>
+</tr>
+</table>
+
+Although you could just evoke `warning()` and `error()` with a single string as
+argument (such as`error('Something went wrong!')`), good-style programs will
+leave the user with a clue _where_ the error has occurred, and of what type the
+error is (as mnemonic). This information is contained in the so-called _message
+ID_.
 
 The MATLAB help page contain quite a bit about message IDs, for example:
 
@@ -803,16 +898,24 @@ conditional statement with several `elseif` statements. They are also
 particularly popular when the conditional is a string comparison (see example
 below).
 
+<table>
+<tr>
+<td>
+
 ```matlab
 switch pet
   case 'Bucky'
     feedCarrots();
   case 'Hector'
     feedSausages();
+
+
+
 end
 ```
 
-When none of the cases matches, the algorithm will just skip and continue.
+</td>
+<td>
 
 ```matlab
 switch pet
@@ -826,7 +929,23 @@ switch pet
 end
 ```
 
+</td>
+</tr>
+<tr>
+<td>
+
+When none of the cases matches, the algorithm will just skip and continue.
+
+</td>
+<td>
+
 The unexpected case is intercepted.
+
+</td>
+</tr>
+</table>
+
+#### First example
 
 ```matlab
 function p = prime( N )
@@ -951,6 +1070,10 @@ slot in memory in case the old one is not wide enough to old all the new
 entries. This is not so bad if it happens once or twice, but can slow down your
 code dramatically when a matrix is growing inside a loop, for example.
 
+<table>
+<tr>
+<td>
+
 ```matlab
 n = 1e5;
 
@@ -959,8 +1082,8 @@ for i = 1:n
 end
 ```
 
-The vector `u` is growing `n` times and it probably must be re-allocated as
-often. The approximate execution time of this code snippet is **21.20**.
+</td>
+<td>
 
 ```matlab
 n = 1e5;
@@ -970,15 +1093,30 @@ for i = 1:n
 end
 ```
 
+</td>
+</tr>
+<tr>
+<td>
+
+The vector `u` is growing `n` times and it probably must be re-allocated as
+often. The approximate execution time of this code snippet is **21.20s**.
+
+</td>
+<td>
+
 As maximum size of the vector is known beforehand, one can easily tell MATLAB
 to place `u` into memory with the appropriate size. The code here merely takes
 **3.8 ms** to execute!
+
+</td>
+</tr>
+</table>
 
 > The previous code example is actually a little misleading as there is a much
 > quicker way to fill `u` with the square roots of consecutive numbers. Can
 > you find the one-liner? A look into the next section could help...
 
-#### Loop vectorization - 🏃🏃🏃🏃🏃
+#### Loop vectorization 🏃🏃🏃🏃🏃
 
 Because of the reasons mentioned in the beginning of this section, you would
 like to avoid loops wherever you can and try to replace it by a vectorized
@@ -1010,7 +1148,7 @@ end
 
 Computation of `f(x)=x-\sin^2(x)` on `n` points between `a` and `b`. In this
 version, each and every single point is being treated explicitly. Execution
-time: approx. 0.91.
+time: approx. **0.91s**.
 
 ```matlab
 n = 1e7;
